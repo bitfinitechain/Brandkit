@@ -6,7 +6,7 @@ and **Ollie** (owl) — plus brand and crypto-culture reactions.
 **Specs:** 128×128 PNG · transparent · < 256 KB each (Discord-ready).
 **Upload:** Server Settings → Emoji → Upload Emoji. The shortcode is the filename
 (e.g. `miso_happy.png` → `:miso_happy:`).
-**Slots:** 38 static emojis — fits Discord's base 50-slot tier (more with boosts).
+**Slots:** 41 static emojis — fits Discord's base 50-slot tier (more with boosts).
 
 ## Brand & server
 | Shortcode | Use |
@@ -16,6 +16,13 @@ and **Ollie** (owl) — plus brand and crypto-culture reactions.
 | `:announce:` | Announcements. |
 | `:pinned:` | Pinned / important. |
 | `:warning:` | Heads-up / caution (pairs with #scam-report). |
+
+## Mining & network
+| Shortcode | Use |
+|---|---|
+| `:blockfound:` | Auto-react in #blocks-found on every solve. |
+| `:node:` | Node operators / #node-operators. |
+| `:network:` | Network health / #network-stats. |
 
 ## Miso — the cat 🐱
 `:miso_happy:` · `:miso_lol:` · `:miso_love:` · `:miso_cool:` · `:miso_smirk:` ·
