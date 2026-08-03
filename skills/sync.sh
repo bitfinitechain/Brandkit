@@ -24,6 +24,7 @@ if [ ${#TARGETS[@]} -eq 0 ]; then
     "$SIBLINGS/bitfinite-analytics"
     "$SIBLINGS/bitfinite-explorer"
     "$SIBLINGS/bitfinite-web"
+    "$SIBLINGS/ckstats-bfx"
     "$SIBLINGS/bitfinite-wallet"
     "$SIBLINGS/bitfinite-webwallet"
   )
