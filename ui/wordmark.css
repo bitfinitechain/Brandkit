@@ -17,4 +17,11 @@
 .bfx-wm--sm { font-size: 17px; }
 .bfx-wm--md { font-size: 20px; }
 .bfx-wm--lg { font-size: 24px; }
+/* Steps 20 -> 24 at the tablet breakpoint. The explorer needs this and learned it
+   the hard way: at a flat 24px its header wanted 834px inside the 768px a tablet
+   gives, and the whole page scrolled sideways. A fixed size that overflows the
+   narrowest supported width is not a size, so the shared component carries the
+   step rather than each app re-deriving it. */
+.bfx-wm--fluid { font-size: 20px; }
+@media (min-width: 768px) { .bfx-wm--fluid { font-size: 24px; } }
 @media (max-width: 1023px) { .bfx-wm__suffix--responsive { display: none; } }

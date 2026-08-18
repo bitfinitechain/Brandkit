@@ -13,19 +13,21 @@ import React from 'react';
 // --wm-fg and --wm-accent and the component stays neutral. That is the same
 // split tokens.css already makes — share primitives, not semantics.
 export function Wordmark({
-    accent = 'FINITE', lead = 'BIT', suffix, size = 'md', hideSuffixBelow = true, className,
+    accent = 'FINITE', lead = 'BIT', suffix, size = 'md', fluid, hideSuffixBelow = true, className,
 }: {
     lead?: string;
     accent?: string;
     /** Product name after the lockup — EXPLORER, ANALYTICS, POOL. */
     suffix?: string;
     size?: 'sm' | 'md' | 'lg';
+    /** Step 20px -> 24px at 768px instead of a fixed size. */
+    fluid?: boolean;
     /** Suffix drops on narrow screens; the lockup alone identifies the site. */
     hideSuffixBelow?: boolean;
     className?: string;
 }) {
     return (
-        <span className={['bfx-wm', `bfx-wm--${size}`, className].filter(Boolean).join(' ')}>
+        <span className={['bfx-wm', fluid ? 'bfx-wm--fluid' : `bfx-wm--${size}`, className].filter(Boolean).join(' ')}>
             <span className="bfx-wm__lead">{lead}</span>
             <span className="bfx-wm__accent">{accent}</span>
             {suffix && (
