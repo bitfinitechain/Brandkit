@@ -1,0 +1,22 @@
+# The contract is only worth having if something runs it. Without this the
+# checker was a file that existed and a claim that "enforced" — a component
+# written against a token only one app defines would still have merged, and the
+# apps that lack it would render it unstyled with nothing to report.
+name: contract
+on:
+  push:
+    paths: ['ui/**', 'tokens/**', 'scripts/**']
+  pull_request:
+    paths: ['ui/**', 'tokens/**', 'scripts/**']
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - run: npm i -g pnpm@10 && pnpm install --frozen-lockfile=false
+      - name: colour / class / size contract
+        run: bash scripts/check-contract.sh
+      - name: typecheck
+        run: npx tsc --noEmit

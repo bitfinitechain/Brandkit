@@ -40,7 +40,7 @@ const valueTone = cva('font-mono font-bold leading-tight tabular-nums', {
             warn: 'text-warning',
             bad: 'text-destructive',
         },
-        size: { default: 'text-[22px]', sm: 'text-[15px]' },
+        size: { default: 'text-[24px]', sm: 'text-[16px]' },
     },
     defaultVariants: { tone: 'default', size: 'default' },
 });
@@ -66,13 +66,13 @@ export function Stat({
 }) {
     return (
         <div data-slot="stat" data-tone={tone ?? 'default'} className={cn(statVariants({ size }), className)} {...props}>
-            <div className={cn('font-mono uppercase text-muted-foreground', size === 'sm' ? 'text-[9.5px] tracking-[.1em]' : 'text-[10.5px] tracking-[.12em]')}>
+            <div className={cn('font-mono uppercase text-muted-foreground', size === 'sm' ? 'text-[10px] tracking-[.1em]' : 'text-[11px] tracking-[.12em]')}>
                 {label}
             </div>
             {/* Never wrap a figure away from its unit, and never let the digits
                 shift as they update — tabular-nums is on the value, not the tile. */}
             <div className={cn(valueTone({ tone, size }), 'whitespace-nowrap')}>{value}</div>
-            {sub && <div className={cn('text-[11.5px] leading-snug', toneText[subTone ?? 'muted'])}>{sub}</div>}
+            {sub && <div className={cn('text-[12px] leading-snug', toneText[subTone ?? 'muted'])}>{sub}</div>}
         </div>
     );
 }

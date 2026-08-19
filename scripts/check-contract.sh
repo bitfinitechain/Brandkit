@@ -31,27 +31,71 @@ wrap nowrap balance pretty ellipsis clip auto none inherit current transparent
 b t l r x y s e sm base lg xl 2xl 3xl 4xl 5xl 6xl 7xl 8xl 9xl xs"
 
 bad=0
-while IFS= read -r hit; do
+report() { echo "  $1"; bad=$((bad + 1)); }
+
+# Comments are stripped: a comment naming a class we moved AWAY from is exactly
+# the documentation we want people to keep writing.
+strip() { perl -0777 -pe 's{/\*.*?\*/}{}gs; s{//[^\n]*}{}g' "$1"; }
+SRC=$(find ui -name '*.tsx' -o -name '*.ts' | sort)
+
+# ---- 1. colour utilities outside the contract ----
+for f in $SRC; do
+  while IFS= read -r hit; do
     [ -z "$hit" ] && continue
-    file="${hit%%:*}"; rest="${hit#*:}"; line="${rest%%:*}"; cls="${rest##*:}"
-    name="${cls#*-}"
+    line="${hit%%:*}"; cls="${hit#*:}"; name="${cls#*-}"
     grep -qw -- "$name" <<<"$CONTRACT" && continue
     grep -qw -- "$name" <<<"$NON_COLOUR" && continue
-    # arbitrary values and opacity modifiers are the app's business, not ours
-    case "$name" in \[*|*/*) continue ;; esac
-    echo "  off-contract  $cls  $file:$line"
-    bad=$((bad + 1))
-done <<<"$(grep -rnoE '\b(bg|text|border|ring|fill|stroke|divide|outline|shadow|from|via|to)-[a-z][a-z0-9-]*' ui --include='*.tsx' 2>/dev/null)"
+    case "$name" in */*) continue ;; esac     # opacity modifier, app's business
+    report "off-contract   $cls  $f:$line"
+  done <<<"$(strip "$f" | grep -noE '\b(bg|text|border|ring|fill|stroke|divide|outline|from|via|to)-[a-z][a-z0-9-]*')"
+done
+
+# ---- 2. arbitrary values reaching for a variable we do not own ----
+# This is what the first version missed: `bg-[var(--hov)]` never matched the
+# regex above, because that regex requires a letter after the prefix. --hov is
+# analytics-only, so the highlight silently vanished in the other three apps.
+for f in $SRC; do
+  while IFS= read -r hit; do
+    [ -z "$hit" ] && continue
+    line="${hit%%:*}"; expr="${hit#*:}"
+    var=$(sed -E 's/.*var\(--([a-z0-9-]+).*/\1/' <<<"$expr")
+    case "$var" in bfx-*) continue ;; esac
+    grep -qw -- "$var" <<<"$CONTRACT" && continue
+    report "unknown var    $expr  $f:$line"
+  done <<<"$(strip "$f" | grep -noE '\[[a-z-]*var\(--[a-z0-9-]+\)\]')"
+done
+
+# ---- 3. class names borrowed from a consuming app ----
+# ops-/hl-/fx-/dn-/ov- are analytics' own families. A component using one renders
+# correctly there and unstyled everywhere else, which is the whole failure this
+# file exists to stop. Ours are bfx-*.
+for f in $SRC; do
+  while IFS= read -r hit; do
+    [ -z "$hit" ] && continue
+    report "app-only class  ${hit#*:}  $f:${hit%%:*}"
+  done <<<"$(strip "$f" | grep -noE '\b(ops|hl|fx|dn|ov|sum|node|st)-[a-z][a-z0-9-]*')"
+done
+
+# ---- 4. font sizes off the Brandkit scale ----
+SCALE=$(grep -oE -- '--bfx-text-[0-9]+:\s*[0-9]+px' tokens/tokens.css | grep -oE '[0-9]+px$' | sort -u)
+for f in $SRC; do
+  while IFS= read -r hit; do
+    [ -z "$hit" ] && continue
+    px=$(grep -oE '[0-9.]+px' <<<"${hit#*:}")
+    grep -qx "$px" <<<"$SCALE" && continue
+    report "off-scale size  ${hit#*:}  $f:${hit%%:*}"
+  done <<<"$(strip "$f" | grep -noE 'text-\[[0-9.]+px\]')"
+done
 
 if [ "$bad" -gt 0 ]; then
     echo
-    echo "$bad off-contract colour name(s)."
-    echo "A component here must only use names every app defines:"
+    echo "$bad finding(s). A component here is a promise that it works in all four"
+    echo "apps, so it may only use names every app defines:"
     echo "$CONTRACT" | tr -s ' \n' ' ' | fold -s -w 72 | sed 's/^/  /'
     echo
-    echo "If a component genuinely needs a new one, add it to the contract in"
-    echo "ui/README.md AND define it in all four apps first — otherwise the"
-    echo "component renders unstyled in the apps that lack it, silently."
+    echo "Adding a name means adding it to ui/README.md AND defining it in all"
+    echo "four apps first — a component that ships ahead of its token is invisible"
+    echo "breakage: the build passes, the page loads, the styling is simply absent."
     exit 1
 fi
-echo "contract: clean — every colour name is defined in all four apps"
+echo "contract: clean — colours, vars, classes and sizes all resolve in all four apps"

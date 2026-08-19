@@ -103,9 +103,10 @@ if [ -d "$UI_DIR" ]; then
       [ -e "$f" ] || continue
       base="$(basename "$f")"
       # Only the imports this component actually makes are required of the repo.
+      # cn() now ships INSIDE the package (ui/lib/cn.ts), so a component no longer
+      # needs the app to provide it. cva is still an external dependency.
       need=""
-      grep -q "from '@/lib/utils'" "$f" && [ "$has_cn" -eq 0 ] && need="lib/utils.ts"
-      grep -q "from 'class-variance-authority'" "$f" && [ "$has_cva" -eq 0 ] && need="${need:+$need+}cva"
+      grep -q "from 'class-variance-authority'" "$f" && [ "$has_cva" -eq 0 ] && need="cva"
       if [ -n "$need" ]; then skipped="$skipped $base($need)"; continue; fi
       {
         echo "// GENERATED — do not edit here."
@@ -114,6 +115,23 @@ if [ -d "$UI_DIR" ]; then
       } > "$dest/$base"
       wrote=$((wrote + 1)); ui_synced=$((ui_synced + 1))
     done
+    # The package's internal helpers travel with the components that import them.
+    # Missing this is a build break, not a style regression: a synced stat.tsx
+    # importing './lib/cn' against an app that has no ui/lib/ simply fails to
+    # resolve.
+    if [ "$wrote" -gt 0 ] && [ -d "$UI_DIR/lib" ]; then
+      mkdir -p "$dest/lib"
+      for f in "$UI_DIR"/lib/*.ts; do
+        [ -e "$f" ] || continue
+        base="$(basename "$f")"
+        {
+          echo "// GENERATED — do not edit here."
+          echo "// Canonical: Brandkit/ui/lib/$base   ·   update there, then: bash skills/sync.sh"
+          cat "$f"
+        } > "$dest/lib/$base"
+      done
+    fi
+
     # Stylesheets that belong to those components travel with them.
     for f in "$UI_DIR"/*.css; do
       [ -e "$f" ] || continue

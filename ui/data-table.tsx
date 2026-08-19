@@ -40,8 +40,10 @@ export function DataTable({
                 </div>
             </div>
             {/* Shown only below the width where these tables actually overflow.
-                `ops-only-sm` is the existing utility for that breakpoint. */}
-            <div className="ops-only-sm font-mono text-[10px] tracking-wider text-muted-foreground mt-1.5">
+                The breakpoint lives in the package's own data-table.css — it used
+                to borrow analytics' `ops-only-sm`, which meant the hint showed at
+                every width in the three apps that never defined it. */}
+            <div className="bfx-dt__hint font-mono text-[10px] tracking-wider text-muted-foreground mt-1.5">
                 {caption ?? '← swipe for more columns →'}
             </div>
         </div>
@@ -74,10 +76,10 @@ export function DataRow({
 
     const cls = cn(
         'grid items-center gap-x-2.5 py-2 font-mono tabular-nums',
-        head ? 'text-[10.5px] tracking-widest text-muted-foreground' : 'text-[12.5px] text-foreground',
+        head ? 'text-[11px] tracking-widest text-muted-foreground' : 'text-[13px] text-foreground',
         !last && 'border-b border-border',
-        highlight && 'bg-[var(--hov)]',
-        href && 'ops-hoverrow no-underline cursor-pointer',
+        highlight && 'bg-muted',
+        href && 'bfx-dt__row-link',
         className,
     );
 
@@ -93,8 +95,8 @@ export function DataRow({
 export function DataEmpty({ title, body, className }: { title: string; body?: string; className?: string }) {
     return (
         <div className={cn('rounded-lg border border-border bg-card px-5 py-8 text-center', className)}>
-            <div className="text-[13.5px] font-semibold text-foreground">{title}</div>
-            {body && <div className="mx-auto mt-1.5 max-w-[46ch] text-[12.5px] leading-relaxed text-muted-foreground">{body}</div>}
+            <div className="text-[14px] font-semibold text-foreground">{title}</div>
+            {body && <div className="mx-auto mt-1.5 max-w-[46ch] text-[13px] leading-relaxed text-muted-foreground">{body}</div>}
         </div>
     );
 }
