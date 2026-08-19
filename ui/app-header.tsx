@@ -34,6 +34,18 @@ const appHeader = cva('w-full border-b border-border', {
     defaultVariants: { surface: 'blur', sticky: true },
 });
 
+// Gutters are a VARIANT, not a house value, because they were measured per app
+// and the measurements disagree for good reasons. The explorer runs `dense`: at
+// 390px its row needs 362px and the 16px gutter leaves 358, which is a documented
+// 4px overflow, so it uses 12. Web runs `wide` at 24. Imposing one number on all
+// three would have re-broken the app that had already measured it.
+const gutter = {
+    dense: 'px-3 sm:px-4',
+    normal: 'px-4 sm:px-6 md:px-10',
+    wide: 'px-6 lg:px-10',
+} as const;
+export type HeaderGutter = keyof typeof gutter;
+
 export interface AppHeaderProps
     extends React.HTMLAttributes<HTMLElement>,
         VariantProps<typeof appHeader> {
@@ -48,15 +60,17 @@ export interface AppHeaderProps
     below?: React.ReactNode;
     /** Content track. Matches --bfx-track; analytics runs its own narrower one. */
     maxWidth?: number | string;
+    /** Horizontal gutters. See the note on `gutter` — these were measured. */
+    padding?: HeaderGutter;
 }
 
 export function AppHeader({
-    brand, children, actions, below, surface, sticky, maxWidth = 1600, className, ...props
+    brand, children, actions, below, surface, sticky, maxWidth = 1600, padding = 'normal', className, ...props
 }: AppHeaderProps) {
     return (
         <header className={cn(appHeader({ surface, sticky }), className)} {...props}>
             <div
-                className="mx-auto flex min-h-16 items-center gap-4 px-4 sm:px-6 md:px-10"
+                className={cn('mx-auto flex min-h-16 items-center gap-4', gutter[padding])}
                 style={{ maxWidth: typeof maxWidth === 'number' ? `${maxWidth}px` : maxWidth }}
             >
                 {/* min-w-0 so a long lockup shrinks rather than pushing the row wider
@@ -68,7 +82,7 @@ export function AppHeader({
             </div>
             {below && (
                 <div
-                    className="mx-auto px-4 sm:px-6 md:px-10"
+                    className={cn('mx-auto', gutter[padding])}
                     style={{ maxWidth: typeof maxWidth === 'number' ? `${maxWidth}px` : maxWidth }}
                 >
                     {below}
