@@ -14,6 +14,7 @@ have no upstream to fall back to.
 | component | replaced |
 |---|---|
 | `stat.tsx` — `Stat`, `StatGrid` | 5 near-identical stat tiles (`Kpi`, `StatCell`, `Stat`, `Mini`, plus the status page's own) |
+| `theme-toggle.tsx` — `ThemeToggle` | 4 theme buttons that had drifted into two different-looking controls |
 | `data-table.tsx` — `DataTable`, `DataRow`, `DataEmpty` | 7 grid-table implementations (`CardTable`/`CardTRow`, `TableWrap`/`THead`/`TRow`, `ERow`/`BRow`) |
 
 Those numbers are the reason these exist. The five stat tiles had already
@@ -126,3 +127,16 @@ Components import `cn` from `./lib/cn` inside the package, never from
 `@/lib/utils`. That alias is the consuming app's and does not exist under
 node_modules; each app still keeps its own copy for its own code and for the
 shadcn primitives it vendors.
+
+## Presentational, not stateful
+
+`ThemeToggle` takes `theme` and `onToggle` rather than reading either itself.
+Three apps drive theme through `next-themes`; analytics through its own
+`bfx-ops-ui` key and a pre-paint script on `<html>`. A component that imported
+`next-themes` could never ship to analytics without replacing a working theme
+system, so the component owns the button and each app keeps its own wiring.
+
+That is the general rule here: share the thing that was actually duplicated. The
+button was copied four times. The state management never was — it differs for
+reasons, and forcing it into one shape would be a migration disguised as a
+component.

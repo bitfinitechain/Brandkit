@@ -10,5 +10,6 @@
 // is how you get a component whose styles win in one app and lose in another.
 export { Wordmark } from './wordmark';
 export { Stat, StatGrid } from './stat';
+export { ThemeToggle, type ThemeToggleProps } from './theme-toggle';
 export { DataTable, DataRow, DataEmpty } from './data-table';
 export { cn } from './lib/cn';
