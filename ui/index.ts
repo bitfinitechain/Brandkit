@@ -12,6 +12,7 @@ export { Wordmark } from './wordmark';
 export { Stat, StatGrid } from './stat';
 export { ThemeToggle, type ThemeToggleProps } from './theme-toggle';
 export { AppHeader, type AppHeaderProps } from './app-header';
+export { SocialLinks, BFX_SOCIALS, type SocialLinksProps, type SocialKey } from './social-links';
 export { Footer, type FooterProps, type FooterColumn, type FooterLink } from './footer';
 // ThemeProvider is NOT here on purpose — it imports next-themes, which analytics
 // does not have. Subpath: '@bitfinitechain/brandkit/ui/theme-provider'.

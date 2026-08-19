@@ -25,7 +25,9 @@ export interface FooterLink {
 
 export interface FooterColumn {
     title: string;
-    links: FooterLink[];
+    links?: FooterLink[];
+    /** For a column that is not a link list — the social row, a form, a note. */
+    content?: React.ReactNode;
 }
 
 export interface FooterProps extends React.HTMLAttributes<HTMLElement> {
@@ -66,11 +68,14 @@ export function Footer({ brand, columns = [], bottom, maxWidth = 1600, className
                     {columns.map((c) => (
                         <div key={c.title} className="min-w-0">
                             <h3 className="mb-4 font-semibold">{c.title}</h3>
-                            <ul className="space-y-2 text-sm text-muted-foreground">
-                                {c.links.map((l) => (
-                                    <li key={`${l.label}-${l.href}`}><FooterAnchor link={l} /></li>
-                                ))}
-                            </ul>
+                            {c.links && (
+                                <ul className="space-y-2 text-sm text-muted-foreground">
+                                    {c.links.map((l) => (
+                                        <li key={`${l.label}-${l.href}`}><FooterAnchor link={l} /></li>
+                                    ))}
+                                </ul>
+                            )}
+                            {c.content}
                         </div>
                     ))}
                 </div>
