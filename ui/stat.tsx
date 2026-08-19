@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 
-import { cn } from '@/lib/utils';
+import { cn } from './lib/cn';
 
 // One stat tile. This replaces five near-identical implementations — Kpi and
 // StatCell in cardui, Stat and Mini in MinerConsole, and the status page's own —
@@ -14,7 +14,7 @@ import { cn } from '@/lib/utils';
 // hard requirement on a host project is that those tokens exist — see the
 // contract in Brandkit/ui/README.md.
 const statVariants = cva(
-    'flex flex-col rounded-lg border border-line bg-cardbg',
+    'flex flex-col rounded-lg border border-border bg-card',
     {
         variants: {
             size: {
@@ -31,14 +31,14 @@ const statVariants = cva(
 const valueTone = cva('font-mono font-bold leading-tight tabular-nums', {
     variants: {
         tone: {
-            default: 'text-fg',
-            accent: 'text-acc',
-            muted: 'text-mut',
-            ok: 'text-ok',
+            default: 'text-foreground',
+            accent: 'text-primary',
+            muted: 'text-muted-foreground',
+            ok: 'text-success',
             // Present because their absence was a bug. A tile that cannot say
             // "degraded" forces every partial failure into either "fine" or "down".
-            warn: 'text-warn',
-            bad: 'text-bad',
+            warn: 'text-warning',
+            bad: 'text-destructive',
         },
         size: { default: 'text-[22px]', sm: 'text-[15px]' },
     },
@@ -51,8 +51,8 @@ export type StatTone = NonNullable<VariantProps<typeof valueTone>['tone']>;
 // lookup rather than a second cva — deriving it by stripping classes out of
 // valueTone's output worked until someone added a class to valueTone.
 const toneText: Record<StatTone, string> = {
-    default: 'text-fg2', accent: 'text-acc', muted: 'text-mut',
-    ok: 'text-ok', warn: 'text-warn', bad: 'text-bad',
+    default: 'text-foreground', accent: 'text-primary', muted: 'text-muted-foreground',
+    ok: 'text-success', warn: 'text-warning', bad: 'text-destructive',
 };
 
 export function Stat({
@@ -66,7 +66,7 @@ export function Stat({
 }) {
     return (
         <div data-slot="stat" data-tone={tone ?? 'default'} className={cn(statVariants({ size }), className)} {...props}>
-            <div className={cn('font-mono uppercase text-mut', size === 'sm' ? 'text-[9.5px] tracking-[.1em]' : 'text-[10.5px] tracking-[.12em]')}>
+            <div className={cn('font-mono uppercase text-muted-foreground', size === 'sm' ? 'text-[9.5px] tracking-[.1em]' : 'text-[10.5px] tracking-[.12em]')}>
                 {label}
             </div>
             {/* Never wrap a figure away from its unit, and never let the digits

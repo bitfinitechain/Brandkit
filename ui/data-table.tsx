@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { cn } from '@/lib/utils';
+import { cn } from './lib/cn';
 
 // A grid "table" — the shape this dashboard actually uses, where a row is a CSS
 // grid rather than a <tr> so a cell can hold a gauge or a sparkline.
@@ -41,7 +41,7 @@ export function DataTable({
             </div>
             {/* Shown only below the width where these tables actually overflow.
                 `ops-only-sm` is the existing utility for that breakpoint. */}
-            <div className="ops-only-sm font-mono text-[10px] tracking-wider text-mut mt-1.5">
+            <div className="ops-only-sm font-mono text-[10px] tracking-wider text-muted-foreground mt-1.5">
                 {caption ?? '← swipe for more columns →'}
             </div>
         </div>
@@ -74,8 +74,8 @@ export function DataRow({
 
     const cls = cn(
         'grid items-center gap-x-2.5 py-2 font-mono tabular-nums',
-        head ? 'text-[10.5px] tracking-widest text-mut' : 'text-[12.5px] text-fg2',
-        !last && 'border-b border-line',
+        head ? 'text-[10.5px] tracking-widest text-muted-foreground' : 'text-[12.5px] text-foreground',
+        !last && 'border-b border-border',
         highlight && 'bg-[var(--hov)]',
         href && 'ops-hoverrow no-underline cursor-pointer',
         className,
@@ -92,9 +92,9 @@ export function DataRow({
 // explanation is indistinguishable from a broken one.
 export function DataEmpty({ title, body, className }: { title: string; body?: string; className?: string }) {
     return (
-        <div className={cn('rounded-lg border border-line bg-cardbg px-5 py-8 text-center', className)}>
-            <div className="text-[13.5px] font-semibold text-fg2">{title}</div>
-            {body && <div className="mx-auto mt-1.5 max-w-[46ch] text-[12.5px] leading-relaxed text-mut">{body}</div>}
+        <div className={cn('rounded-lg border border-border bg-card px-5 py-8 text-center', className)}>
+            <div className="text-[13.5px] font-semibold text-foreground">{title}</div>
+            {body && <div className="mx-auto mt-1.5 max-w-[46ch] text-[12.5px] leading-relaxed text-muted-foreground">{body}</div>}
         </div>
     );
 }

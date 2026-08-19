@@ -81,3 +81,48 @@ partial failure into either "fine" or "down".
 Edit here, then `bash skills/sync.sh`. Verify across **both UI modes and both
 themes** before pushing — every theming bug found in this codebase was invisible
 in one combination and obvious in another.
+
+## The colour contract
+
+A component here may only use these colour names. All four apps define every one
+of them; each app chooses its own values behind them.
+
+    background   foreground        card      card-foreground
+    popover      popover-foreground primary  primary-foreground
+    secondary    secondary-foreground muted  muted-foreground
+    accent       accent-foreground  destructive  destructive-foreground
+    border       input              ring
+    success      warning
+
+The last two are the contract's only addition to the shadcn set — shadcn has
+`destructive` but no success or warning, and every one of our apps needed them.
+Analytics calls them `--ok`/`--warn` internally and aliases them; the other three
+already used `--success`/`--warning`.
+
+**Why this is enforced rather than documented.** `stat.tsx` shipped written
+against `bg-cardbg`, `border-line`, `text-fg`, `text-acc` — names that exist only
+in analytics. Installed anywhere else it would have rendered with no background,
+no border and inherited text, while the build passed and the page loaded.
+Nothing would have reported it. `scripts/check-contract.sh` fails on any colour
+name outside the list above, because a component in here is a promise that it
+works in all four apps.
+
+Adding a name means adding it to this list **and** defining it in all four apps
+first. A component that ships ahead of its token is invisible breakage.
+
+## Packaging
+
+Consumed as `@bitfinitechain/brandkit`. Source `.tsx` ships as-is — there is no
+build step and therefore no stale artifact — so a consuming app needs two lines:
+
+    // next.config.ts
+    transpilePackages: ['@bitfinitechain/brandkit'],
+
+    /* globals.css — Tailwind v4 does not scan node_modules, so without this a
+       class used only inside a component is never generated */
+    @source "../node_modules/@bitfinitechain/brandkit/ui";
+
+Components import `cn` from `./lib/cn` inside the package, never from
+`@/lib/utils`. That alias is the consuming app's and does not exist under
+node_modules; each app still keeps its own copy for its own code and for the
+shadcn primitives it vendors.

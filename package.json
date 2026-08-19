@@ -1,0 +1,41 @@
+{
+  "name": "@bitfinitechain/brandkit",
+  "version": "1.0.0",
+  "description": "BitFinite design tokens and shared UI components",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bitfinitechain/Brandkit.git"
+  },
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "ui",
+    "tokens",
+    "LICENSE.md"
+  ],
+  "exports": {
+    ".": "./ui/index.ts",
+    "./styles.css": "./ui/styles.css",
+    "./tokens.css": "./tokens/tokens.css",
+    "./ui/*": "./ui/*",
+    "./package.json": "./package.json"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "dependencies": {
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.6.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "typescript": "^7.0.2"
+  }
+}

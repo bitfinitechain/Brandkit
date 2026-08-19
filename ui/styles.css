@@ -1,0 +1,4 @@
+/* Every Brandkit component stylesheet, in one import.
+   Apps do:  @import "@bitfinitechain/brandkit/styles.css";
+   after their token import, so component rules can reference --bfx-*. */
+@import "./wordmark.css";
