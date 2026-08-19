@@ -15,6 +15,9 @@ have no upstream to fall back to.
 |---|---|
 | `stat.tsx` — `Stat`, `StatGrid` | 5 near-identical stat tiles (`Kpi`, `StatCell`, `Stat`, `Mini`, plus the status page's own) |
 | `theme-toggle.tsx` — `ThemeToggle` | 4 theme buttons that had drifted into two different-looking controls |
+| `theme-provider.tsx` — `ThemeProvider` | 3 next-themes mounts with byte-identical props (subpath export only) |
+| `app-header.tsx` — `AppHeader` | 3 header shells in 2 treatments, one using the wrong element |
+| `footer.tsx` — `Footer` | 3 footers, 89/91/129 lines of the same shape — and the last 3 hand-rolled lockups |
 | `data-table.tsx` — `DataTable`, `DataRow`, `DataEmpty` | 7 grid-table implementations (`CardTable`/`CardTRow`, `TableWrap`/`THead`/`TRow`, `ERow`/`BRow`) |
 
 Those numbers are the reason these exist. The five stat tiles had already
