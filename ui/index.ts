@@ -16,5 +16,10 @@ export { SocialLinks, BFX_SOCIALS, type SocialLinksProps, type SocialKey } from 
 export { Footer, type FooterProps, type FooterColumn, type FooterLink } from './footer';
 // ThemeProvider is NOT here on purpose — it imports next-themes, which analytics
 // does not have. Subpath: '@bitfinitechain/brandkit/ui/theme-provider'.
+export { Button, buttonVariants } from './button';
+export { Badge, badgeVariants } from './badge';
+export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from './card';
+export { Input } from './input';
+export { Select } from './select';
 export { DataTable, DataRow, DataEmpty } from './data-table';
 export { cn } from './lib/cn';

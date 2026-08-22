@@ -1,6 +1,6 @@
 {
   "name": "@bitfinitechain/brandkit",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "BitFinite design tokens and shared UI components",
   "license": "SEE LICENSE IN LICENSE.md",
   "repository": {
@@ -31,6 +31,7 @@
     "react-dom": "^19.0.0"
   },
   "dependencies": {
+    "@radix-ui/react-slot": "1.3.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "tailwind-merge": "^3.6.0"
