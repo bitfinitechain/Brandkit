@@ -19,12 +19,37 @@ have no upstream to fall back to.
 | `app-header.tsx` — `AppHeader` | 3 header shells in 2 treatments, one using the wrong element |
 | `footer.tsx` — `Footer` | 3 footers, 89/91/129 lines of the same shape — and the last 3 hand-rolled lockups |
 | `data-table.tsx` — `DataTable`, `DataRow`, `DataEmpty` | 7 grid-table implementations (`CardTable`/`CardTRow`, `TableWrap`/`THead`/`TRow`, `ERow`/`BRow`) |
+| `empty-state.tsx` — `EmptyState` | new — the guidelines require loading/empty/error on every async surface, and this was the missing middle one |
+| `copy-field.tsx` — `CopyField` | new — mono value + Copy, for stratum URLs, `bfx:` addresses and txids |
+| `sparkline.tsx` — `Sparkline` | 3 copies: explorer's `Sparkline`, analytics' `charts.tsx`, the pep tenant's fork of it |
+| `gauge.tsx` — `Gauge` | analytics' gauge inside `ops/OpsShell.tsx` |
+| `donut.tsx` — `Donut` | analytics' `ops/Donut.tsx` |
+| `bar-chart.tsx` — `BarChart` | new — from the brand guideline |
+| `line-chart.tsx` — `LineChart` | new — from the brand guideline; carries the hover readout the guidelines require of a chart |
+| `sidebar.tsx` — `Sidebar` | new — from the brand guideline; uses `Wordmark` rather than a fourth hand-rolled lockup |
 
 Those numbers are the reason these exist. The five stat tiles had already
 drifted — only some carried a tone, only some had a sub-line, and **not one of
 them could express "degraded"**, which is why a miner with half its workers
 offline rendered in the healthy colour. `ERow` and `BRow` were byte-identical
 apart from a grid-template string.
+
+## Source of truth
+
+The component set follows the BFX brand guideline handoff (`design_handoff_bfx_components`),
+which is itself written against `tokens/tokens.css` — so tokens remain canonical here and the
+guideline describes how they are used. Two things in that handoff do NOT match its own rules,
+and this package follows the rules:
+
+- It states the type scale as `10, 11, 12, 13, 14, 16, 20, 24, 30, 44` and then uses 9px
+  (Donut centre label) and 27px (Gauge figure). Both are snapped to the scale here — 10px
+  and 24px — because `scripts/check-contract.sh` enforces the scale and 24px is already the
+  large-figure step `Stat` uses.
+- Its README mentions an accent of `#0043FF`, which appears nowhere else: the handoff's own
+  `Wordmark.dc.html` uses `#0644f1`, the Brandkit token. Treated as a prose slip.
+
+The handoff also splits the 39 components into shadcn primitives, which stay vendored per
+repo, and BFX-owned ones, which live here. Only the latter were added.
 
 ## Prerequisites — the contract
 

@@ -22,4 +22,15 @@ export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 export { Input } from './input';
 export { Select } from './select';
 export { DataTable, DataRow, DataEmpty } from './data-table';
+export { EmptyState, type EmptyStateProps } from './empty-state';
+export { CopyField, type CopyFieldProps } from './copy-field';
+// Charts. `chartToneClass` and `ChartTone` live in sparkline.tsx because that is
+// the smallest of them; every other chart imports the tone map from there rather
+// than each declaring its own idea of what "warn" looks like.
+export { Sparkline, chartToneClass, type SparklineProps, type ChartTone } from './sparkline';
+export { Gauge, type GaugeProps } from './gauge';
+export { Donut, type DonutProps, type DonutSegment } from './donut';
+export { BarChart, type BarChartProps, type BarDatum } from './bar-chart';
+export { LineChart, type LineChartProps, type LinePoint } from './line-chart';
+export { Sidebar, type SidebarProps, type SidebarGroup, type SidebarItem } from './sidebar';
 export { cn } from './lib/cn';

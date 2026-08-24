@@ -1,0 +1,19 @@
+/* Arc transitions for Gauge and Donut.
+
+   These live in CSS rather than a Tailwind arbitrary value because the property
+   being animated is called `stroke-dasharray`, and the contract checker reads
+   any `stroke-*` string in a component as a design token that must exist in all
+   four apps. It is a CSS property name, not a token — so it belongs in a
+   stylesheet, which is also how wordmark and data-table already do it.
+
+   Reduced motion gets the final value with no sweep. An arc animating itself in
+   is decoration, and decoration is exactly what that setting asks us to drop. */
+.bfx-arc {
+    transition: stroke-dasharray 0.5s ease, color 0.3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .bfx-arc {
+        transition: none;
+    }
+}

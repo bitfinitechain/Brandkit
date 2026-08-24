@@ -3,3 +3,4 @@
    after their token import, so component rules can reference --bfx-*. */
 @import "./wordmark.css";
 @import "./data-table.css";
+@import "./charts.css";
