@@ -66,7 +66,7 @@ export function Stat({
 }) {
     return (
         <div data-slot="stat" data-tone={tone ?? 'default'} className={cn(statVariants({ size }), className)} {...props}>
-            <div className={cn('font-mono uppercase text-muted-foreground', size === 'sm' ? 'text-[10px] tracking-[.1em]' : 'text-[11px] tracking-[.12em]')}>
+            <div className={cn('font-mono uppercase text-muted-foreground', size === 'sm' ? 'text-[10px] tracking-[.12em]' : 'text-[11px] tracking-[.12em]')}>
                 {label}
             </div>
             {/* Never wrap a figure away from its unit, and never let the digits

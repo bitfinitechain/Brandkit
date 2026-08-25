@@ -27,10 +27,10 @@ const themeToggle = cva(
         variants: {
             variant: {
                 // Marketing and public surfaces: no chrome until you reach for it.
-                ghost: 'rounded-md border-0 bg-transparent text-muted-foreground hover:bg-muted hover:text-foreground',
+                ghost: 'rounded-lg border-0 bg-transparent text-muted-foreground hover:bg-muted hover:text-foreground',
                 // Dense operator chrome, where a control needs an edge to read as
                 // one control among several rather than as loose iconography.
-                outline: 'rounded-md border border-border bg-secondary text-foreground hover:bg-muted',
+                outline: 'rounded-lg border border-border bg-secondary text-foreground hover:bg-muted',
             },
             size: { sm: 'size-8', md: 'size-9' },
         },

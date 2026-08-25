@@ -25,7 +25,7 @@ function Select({
             <select
                 data-slot="select"
                 className={cn(
-                    "h-10 w-full appearance-none rounded-md border border-border bg-panel2 pl-3 pr-9 text-sm text-fg",
+                    "h-10 w-full appearance-none rounded-lg border border-border bg-panel2 pl-3 pr-9 text-sm text-fg",
                     "transition-[color,box-shadow] outline-none",
                     "focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/40",
                     "disabled:cursor-not-allowed disabled:opacity-50",

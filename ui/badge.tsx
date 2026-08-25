@@ -41,7 +41,7 @@ const badgeVariants = cva(
       },
       size: {
         default: "px-2 py-0.5 text-xs font-medium",
-        mono: "px-[7px] py-[3px] font-mono text-[9.5px] font-bold tracking-[.1em] uppercase leading-none",
+        mono: "px-2 py-[3px] font-mono text-[10px] font-bold tracking-[.1em] uppercase leading-none",
       },
     },
     defaultVariants: {
