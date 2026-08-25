@@ -32,5 +32,6 @@ export { Gauge, type GaugeProps } from './gauge';
 export { Donut, type DonutProps, type DonutSegment } from './donut';
 export { BarChart, type BarChartProps, type BarDatum } from './bar-chart';
 export { LineChart, type LineChartProps, type LinePoint } from './line-chart';
+export { smoothPath } from './lib/smooth-path';
 export { Sidebar, type SidebarProps, type SidebarGroup, type SidebarItem } from './sidebar';
 export { cn } from './lib/cn';
