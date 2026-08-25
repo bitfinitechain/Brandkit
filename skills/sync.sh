@@ -98,6 +98,12 @@ if [ -d "$UI_DIR" ]; then
     # shipped it a component it could not compile.
     has_cn=0;  { [ -f "$target/lib/utils.ts" ] || [ -f "$target/src/lib/utils.ts" ]; } && has_cn=1
     has_cva=0; grep -q '"class-variance-authority"' "$target/package.json" 2>/dev/null && has_cva=1
+    # next-themes is a real peer dependency, not a styling bridge. analytics
+    # deliberately does NOT use it - it flips data-theme on <html> from a pre-paint
+    # script so there is no flash - so vendoring theme-provider.tsx there broke the
+    # build on a module it must never gain. Gate it like cva: the component travels
+    # only to repos that already made that choice.
+    has_themes=0; grep -q '"next-themes"' "$target/package.json" 2>/dev/null && has_themes=1
     wrote=0; skipped=""
     for f in "$UI_DIR"/*.tsx; do
       [ -e "$f" ] || continue
@@ -107,6 +113,7 @@ if [ -d "$UI_DIR" ]; then
       # needs the app to provide it. cva is still an external dependency.
       need=""
       grep -q "from 'class-variance-authority'" "$f" && [ "$has_cva" -eq 0 ] && need="cva"
+      grep -q "from 'next-themes'" "$f" && [ "$has_themes" -eq 0 ] && need="next-themes"
       if [ -n "$need" ]; then skipped="$skipped $base($need)"; continue; fi
       {
         echo "// GENERATED — do not edit here."
