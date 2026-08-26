@@ -109,6 +109,14 @@ export function LineChart({
                 {linePath ? (
                     <path d={linePath} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinejoin="round" strokeLinecap="round" />
                 ) : null}
+                {/* The latest value keeps a marker whether or not anyone is hovering.
+                    Per LineChart.dc.html, which draws this circle outside the hover
+                    branch — the endpoint is where the eye goes first, and a line that
+                    just stops has no "you are here". Hidden while hovering so the two
+                    markers never sit on top of each other at the right-hand edge. */}
+                {pts.length && hover == null ? (
+                    <circle cx={pts[pts.length - 1][0]} cy={pts[pts.length - 1][1]} r={4} fill="currentColor" />
+                ) : null}
                 {hover != null && pts[hover] ? (
                     <>
                         <line

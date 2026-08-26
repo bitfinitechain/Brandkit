@@ -76,7 +76,7 @@ break through an alias.
 ```
 
 **3. Two UI modes, if you want them.** `--r`/`--r2` are read through the radius
-scale, so `rounded-lg` is 14px in a rounded mode and 0 in a flat one with no
+scale, so `rounded-lg` is 8px in a rounded mode (the handoff's control radius) and 0 in a flat one with no
 conditional at the call site. A project with one mode just sets them to fixed
 values — nothing here assumes two.
 
