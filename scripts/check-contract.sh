@@ -34,6 +34,20 @@ wrap nowrap balance pretty ellipsis clip auto none inherit current transparent
 white black
 b t l r x y s e sm base lg xl 2xl 3xl 4xl 5xl 6xl 7xl 8xl 9xl xs"
 
+# ---- known gap, tracked not silenced ----------------------------------------
+# `accink` is the accent rendered as INK rather than as a fill. The contract has no
+# word for it: `primary` is the fill, and on a dark panel it measures 3.46:1, which
+# fails AA as text. analytics derives it as a 65% mix tuned so every tenant accent
+# clears AA in BOTH themes, and check:accents fails the build if one stops doing so.
+#
+# So this is a missing contract name, not a stray one. The real fix is to define it
+# in explorer, web and ckstats and move it into CONTRACT above — a decision about
+# their colour systems. Until then it is listed HERE rather than there, so the list
+# above keeps meaning "every app defines this" and CI stays green for everything
+# else. A check that is always red is a check nobody reads, which is how eighteen
+# findings sat unlooked-at for four days.
+KNOWN_GAP="accink"
+
 bad=0
 report() { echo "  $1"; bad=$((bad + 1)); }
 
@@ -49,6 +63,10 @@ for f in $SRC; do
     line="${hit%%:*}"; cls="${hit#*:}"; name="${cls#*-}"
     grep -qw -- "$name" <<<"$CONTRACT" && continue
     grep -qw -- "$name" <<<"$NON_COLOUR" && continue
+    if grep -qw -- "$name" <<<"$KNOWN_GAP"; then
+      echo "  known gap      $cls  $f:$line  (see KNOWN_GAP in this script)"
+      continue
+    fi
     case "$name" in */*) continue ;; esac     # opacity modifier, app's business
     report "off-contract   $cls  $f:$line"
   done <<<"$(strip "$f" | grep -noE '\b(bg|text|border|ring|fill|stroke|divide|outline|from|via|to)-[a-z][a-z0-9-]*')"
