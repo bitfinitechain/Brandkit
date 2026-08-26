@@ -33,11 +33,11 @@ const badgeVariants = cva(
         link: "text-primary underline-offset-4 [a&]:hover:underline",
         // ops tones — hairline box, tinted text, no fill. Reads as a status marker
         // rather than a button, which is what these actually are.
-        accent: "border-acc text-accink",
-        ok: "border-ok/45 text-ok",
-        warn: "border-warn/45 text-warn",
-        bad: "border-bad/45 text-bad",
-        muted: "border-line text-mut",
+        accent: "border-primary text-accink",
+        ok: "border-success/45 text-success",
+        warn: "border-warning/45 text-warning",
+        bad: "border-destructive/45 text-destructive",
+        muted: "border-border text-muted-foreground",
       },
       size: {
         default: "px-2 py-0.5 text-xs font-medium",

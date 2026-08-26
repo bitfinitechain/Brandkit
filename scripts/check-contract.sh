@@ -26,8 +26,12 @@ success warning"
 
 # Utilities that take a colour. `border-b` and `text-left` are not colours, so a
 # name is only a finding when it is not one of Tailwind's own non-colour values.
+# white and black are Tailwind's own built-in colours, not tokens. An app cannot
+# fail to define them, so flagging them was a false positive — it cost two of the
+# eighteen findings and made the real ones easier to dismiss.
 NON_COLOUR="left right center justify start end top bottom middle baseline
 wrap nowrap balance pretty ellipsis clip auto none inherit current transparent
+white black
 b t l r x y s e sm base lg xl 2xl 3xl 4xl 5xl 6xl 7xl 8xl 9xl xs"
 
 bad=0

@@ -25,7 +25,7 @@ function Select({
             <select
                 data-slot="select"
                 className={cn(
-                    "h-10 w-full appearance-none rounded-lg border border-border bg-panel2 pl-3 pr-9 text-sm text-fg",
+                    "h-10 w-full appearance-none rounded-lg border border-border bg-secondary pl-3 pr-9 text-sm text-foreground",
                     "transition-[color,box-shadow] outline-none",
                     "focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/40",
                     "disabled:cursor-not-allowed disabled:opacity-50",
@@ -38,7 +38,7 @@ function Select({
             {/* pointer-events-none so the chevron never eats a click meant for the
                 control underneath it. */}
             <ChevronDown
-                className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-mut"
+                className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
                 aria-hidden="true"
             />
         </div>
