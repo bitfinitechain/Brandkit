@@ -61,7 +61,28 @@ in `node_modules` that can lag this working copy.
 
 ## Known render warns
 
-_(none triaged yet — first sync still in progress)_
+All current warns are unauthored previews rendering thin, which is the floor
+card working as designed — not defects. Re-check them only after a preview is
+authored for that component:
+
+- `[RENDER_BLANK]` AppHeader, Badge, Footer, Input
+- `[RENDER_THIN]` ThemeToggle
+
+## Where this run stopped
+
+First sync, 2026-09-03. Build and validate are clean (`✓ bundle is complete`,
+28 components, 36 exports). **Nothing was uploaded and no Claude Design project
+exists** — the session could not authorise (`/design-login` is interactive-only
+and was declined), so `cfg.projectId` is deliberately absent.
+
+All 28 components ship fully functional with prop contracts and usage notes;
+13 are on floor cards because preview authoring was stopped as not worth the
+cost while the upload path was closed. Authored previews carry forward, so a
+later run resumes exactly here.
+
+To pick this up: authorise, then §1 creates a project and the run goes down the
+incremental path. Nothing here needs redoing — but re-run `build-styles.sh`
+first, and recreate the node_modules self-link if this is a fresh clone.
 
 ## Re-sync risks
 
