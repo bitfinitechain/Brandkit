@@ -2,10 +2,15 @@
   "pkg": "@bitfinitechain/brandkit",
   "globalName": "Brandkit",
   "shape": "package",
+  "projectId": "5407ec64-0688-45e2-8a53-f33fd00a7d25",
   "srcDir": "ui",
   "tsconfig": "tsconfig.json",
   "cssEntry": ".design-sync/brandkit-styles.css",
+  "tokensPkg": "@bitfinitechain/brandkit",
   "tokensGlob": "tokens/*.css",
+  "extraEntries": [
+    "./.design-sync/process-shim.js"
+  ],
   "componentSrcMap": {
     "Wordmark": "ui/wordmark.tsx",
     "Stat": "ui/stat.tsx",
@@ -35,9 +40,5 @@
     "BarChart": "ui/bar-chart.tsx",
     "LineChart": "ui/line-chart.tsx",
     "Sidebar": "ui/sidebar.tsx"
-  },
-  "tokensPkg": "@bitfinitechain/brandkit",
-  "extraEntries": [
-    "./.design-sync/process-shim.js"
-  ]
+  }
 }

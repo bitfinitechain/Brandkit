@@ -71,9 +71,22 @@ authored for that component:
 ## Where this run stopped
 
 First sync, 2026-09-03. Build and validate are clean (`✓ bundle is complete`,
-28 components, 36 exports). **Nothing was uploaded and no Claude Design project
-exists** — the session could not authorise (`/design-login` is interactive-only
-and was declined), so `cfg.projectId` is deliberately absent.
+28 components, 36 exports).
+
+**The bundle was uploaded BY HAND, not by this tooling.** DesignSync could not
+authorise from this session — it runs under the VSCode extension on the Agent
+SDK, which the tool treats as non-interactive, so it refused rather than
+prompting. `/design-login` was not available either. The user created the
+project and added `ds-bundle/`'s contents manually.
+
+Project: https://claude.ai/design/p/5407ec64-0688-45e2-8a53-f33fd00a7d25
+`cfg.projectId` is pinned to it so the next run adopts this project instead of
+creating a duplicate and orphaning it.
+
+**Nothing about that project has been verified from here** — not its type, not
+its file list, not that the cards registered. The first authorised run should
+`list_files` it before trusting the anchor, and treat a surprising diff as the
+manual upload having missed or added files rather than as drift.
 
 All 28 components ship fully functional with prop contracts and usage notes;
 13 are on floor cards because preview authoring was stopped as not worth the
