@@ -1,0 +1,43 @@
+{
+  "pkg": "@bitfinitechain/brandkit",
+  "globalName": "Brandkit",
+  "shape": "package",
+  "srcDir": "ui",
+  "tsconfig": "tsconfig.json",
+  "cssEntry": ".design-sync/brandkit-styles.css",
+  "tokensGlob": "tokens/*.css",
+  "componentSrcMap": {
+    "Wordmark": "ui/wordmark.tsx",
+    "Stat": "ui/stat.tsx",
+    "StatGrid": "ui/stat.tsx",
+    "ThemeToggle": "ui/theme-toggle.tsx",
+    "AppHeader": "ui/app-header.tsx",
+    "SocialLinks": "ui/social-links.tsx",
+    "Footer": "ui/footer.tsx",
+    "Button": "ui/button.tsx",
+    "Badge": "ui/badge.tsx",
+    "Card": "ui/card.tsx",
+    "CardHeader": "ui/card.tsx",
+    "CardTitle": "ui/card.tsx",
+    "CardDescription": "ui/card.tsx",
+    "CardContent": "ui/card.tsx",
+    "CardFooter": "ui/card.tsx",
+    "Input": "ui/input.tsx",
+    "Select": "ui/select.tsx",
+    "DataTable": "ui/data-table.tsx",
+    "DataRow": "ui/data-table.tsx",
+    "DataEmpty": "ui/data-table.tsx",
+    "EmptyState": "ui/empty-state.tsx",
+    "CopyField": "ui/copy-field.tsx",
+    "Sparkline": "ui/sparkline.tsx",
+    "Gauge": "ui/gauge.tsx",
+    "Donut": "ui/donut.tsx",
+    "BarChart": "ui/bar-chart.tsx",
+    "LineChart": "ui/line-chart.tsx",
+    "Sidebar": "ui/sidebar.tsx"
+  },
+  "tokensPkg": "@bitfinitechain/brandkit",
+  "extraEntries": [
+    "./.design-sync/process-shim.js"
+  ]
+}
