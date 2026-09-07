@@ -36,3 +36,23 @@ export { LineChart, type LineChartProps, type LinePoint } from './line-chart';
 export { smoothPath } from './lib/smooth-path';
 export { Sidebar, type SidebarProps, type SidebarGroup, type SidebarItem } from './sidebar';
 export { cn } from './lib/cn';
+
+// ---- primitives added to close the gap with shadcn -----------------------
+// Ordered as the docs order them, so the two lists can be read side by side.
+export { Alert, AlertTitle, AlertDescription, alertVariants, type AlertProps } from './alert';
+export { Avatar, type AvatarProps } from './avatar';
+export { Checkbox, type CheckboxProps } from './checkbox';
+export { Collapsible, CollapsibleTrigger, CollapsibleContent } from './collapsible';
+export { Kbd } from './kbd';
+export { Label } from './label';
+export {
+    Popover, PopoverTrigger, PopoverContent, PopoverAnchor,
+    PopoverHeader, PopoverTitle, PopoverDescription,
+} from './popover';
+export { Progress, type ProgressProps } from './progress';
+export { Separator, type SeparatorProps } from './separator';
+export { Skeleton, SkeletonText, type SkeletonProps } from './skeleton';
+export { Spinner, type SpinnerProps } from './spinner';
+export { Switch, type SwitchProps } from './switch';
+export { Textarea } from './textarea';
+export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from './tooltip';

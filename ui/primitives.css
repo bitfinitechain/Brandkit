@@ -1,0 +1,60 @@
+/* Motion and masks for the primitives that need more than utility classes.
+   Everything here drops (not shortens) under prefers-reduced-motion: these are
+   all decoration around a wait, and a wait does not need to move. */
+
+/* ---- Skeleton -------------------------------------------------------------
+   A sheen that travels, not an opacity throb. A block fading in and out is hard
+   to tell from a disabled one, which is the state it most needs to not look
+   like. */
+.bfx-skeleton {
+  position: relative;
+  overflow: hidden;
+}
+.bfx-skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--bfx-zinc-50) 22%, transparent),
+    transparent
+  );
+  animation: bfx-sheen 1.4s ease-in-out infinite;
+}
+
+@keyframes bfx-sheen {
+  100% { transform: translateX(100%); }
+}
+
+/* ---- Spinner --------------------------------------------------------------
+   Stops turning under reduced motion but stays on screen: "something is in
+   progress" is information, not decoration, and hiding it loses the fact. */
+.bfx-spinner { animation: bfx-spin 900ms linear infinite; transform-origin: 50% 50%; }
+@keyframes bfx-spin { to { transform: rotate(360deg); } }
+
+/* ---- Progress, indeterminate ---------------------------------------------
+   For "working, length unknown". The alternative every app reached for was a
+   made-up percentage, which is a number a reader has no way to check. */
+.bfx-progress-indeterminate { animation: bfx-slide 1.3s ease-in-out infinite; }
+@keyframes bfx-slide {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(250%); }
+}
+
+/* ---- Checkbox marks -------------------------------------------------------
+   The tick and the dash, as inline SVG masks rather than a child element, so a
+   native <input> can carry them and keep everything the platform gives it. */
+:root {
+  --bfx-tick: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");
+  --bfx-dash: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.5' stroke-linecap='round'%3E%3Cpath d='M5 12h14'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bfx-skeleton::after,
+  .bfx-spinner,
+  .bfx-progress-indeterminate { animation: none; }
+  /* Without the travelling sheen a skeleton still has to read as "not content". */
+  .bfx-skeleton::after { transform: none; background-image: none; }
+}
