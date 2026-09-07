@@ -2,7 +2,8 @@ import * as React from 'react';
 
 import { cn } from './lib/cn';
 
-// A 120x32 trend line with a dot on the latest point.
+// A trend line with a dot on the latest point: 120x32 by default, or the
+// width of its container with `fill`.
 //
 // Three apps had grown their own — explorer's Sparkline, analytics' charts.ts and
 // the pep tenant's copy — with different stroke widths and no shared idea of what
@@ -29,9 +30,29 @@ export interface SparklineProps extends React.ComponentProps<'span'> {
     tone?: ChartTone;
     /** Draw the dot on the last point. Off for dense table cells. */
     showLast?: boolean;
+    /**
+     * Stretch to the container's width instead of the fixed 120px box.
+     *
+     * The reason the apps kept writing their own: a sparkline under a KPI or
+     * beside a column wants the width it is given, and a fixed box cannot take
+     * it. See the aspect note on the svg below for why filling is safe here.
+     */
+    fill?: boolean;
+    /** Box height in px. Default 32. */
+    height?: number;
+    /**
+     * What it plots.
+     *
+     * Given, the sparkline stops being decorative: it takes an accessible name
+     * and a hover readout naming the range. Without it the chart is aria-hidden,
+     * which is right when the number beside it already says everything.
+     */
+    label?: string;
 }
 
-export function Sparkline({ data, tone = 'accent', showLast = true, className, ...props }: SparklineProps) {
+export function Sparkline({
+    data, tone = 'accent', showLast = true, fill, height = H, label, className, ...props
+}: SparklineProps) {
     const pts = React.useMemo(() => {
         if (!data || data.length === 0) return [];
         const lo = Math.min(...data);
@@ -51,17 +72,44 @@ export function Sparkline({ data, tone = 'accent', showLast = true, className, .
     const d = pts.map(([x, y], i) => `${i ? 'L' : 'M'}${x.toFixed(2)} ${y.toFixed(2)}`).join(' ');
     const [lx, ly] = pts[pts.length - 1];
 
+    // Says the floor out loud: the plot is zoomed to the series, so the line
+    // touching the bottom means "series minimum", not zero.
+    const n = (v: number) => Number(v || 0).toLocaleString(undefined, { maximumFractionDigits: 0 });
+    const tip = label
+        ? `${label} · ${data.length} points · low ${n(Math.min(...data))} · high ${n(Math.max(...data))} · latest ${n(data[data.length - 1])}`
+        : undefined;
+
     return (
         <span
-            className={cn('inline-block h-8 w-[120px] align-middle', chartToneClass[tone], className)}
+            className={cn('relative align-middle', fill ? 'block w-full' : 'inline-block w-[120px]',
+                          chartToneClass[tone], className)}
+            style={{ height }}
+            role={tip ? 'img' : undefined}
+            aria-label={tip}
+            aria-hidden={tip ? undefined : true}
             {...props}
         >
-            <svg viewBox={`0 0 ${W} ${H}`} className="block h-full w-full" aria-hidden="true">
-                <path d={d} fill="none" stroke="currentColor" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
-                {showLast ? <circle cx={lx} cy={ly} r={2.5} fill="currentColor" /> : null}
+            {/* preserveAspectRatio="none", deliberately.
+                A sparkline is a shape read for direction, not for angle, and the
+                box it is given is whatever the layout has spare. Stretching the
+                viewBox is how it fills that; `meet` would letterbox it inside a
+                120:32 box and leave dead space either side, which is the bug the
+                treemap had. The stroke is held at 2px by non-scaling-stroke, and
+                the dot is a DOM element rather than an SVG circle so that it
+                stays ROUND: a <circle> under a stretched viewBox is an ellipse,
+                and every hand-rolled copy of this got that wrong. */}
+            <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" className="block h-full w-full">
+                {tip ? <title>{tip}</title> : null}
+                <path d={d} fill="none" stroke="currentColor" strokeWidth={2}
+                      vectorEffect="non-scaling-stroke" strokeLinejoin="round" strokeLinecap="round" />
             </svg>
+            {showLast ? (
+                <span
+                    aria-hidden="true"
+                    className="absolute h-[5px] w-[5px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-current"
+                    style={{ left: `${(lx / W) * 100}%`, top: `${(ly / H) * 100}%` }}
+                />
+            ) : null}
         </span>
     );
 }
-
-export default Sparkline;
