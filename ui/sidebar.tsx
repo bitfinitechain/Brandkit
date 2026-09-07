@@ -43,6 +43,16 @@ export interface SidebarProps extends React.ComponentProps<'nav'> {
     collapsed?: boolean;
     /** Rendered above the groups, for a collapse control or anything else. */
     header?: React.ReactNode;
+    /**
+     * What to render a route item as. Defaults to a plain `<a>`.
+     *
+     * Pass a framework's link (Next's `Link`, for one) and every rail item
+     * navigates the way the rest of that app does. Without it a rail in a
+     * routed app reloads the whole document on every click, which is both
+     * slower and a different behaviour from the same destination reached
+     * through an in-page link.
+     */
+    linkAs?: React.ElementType;
 }
 
 /** The label as a string, for `title` and the accessible name when collapsed. */
@@ -51,7 +61,7 @@ function textOf(node: React.ReactNode): string | undefined {
     return undefined;
 }
 
-function Item({ item, collapsed }: { item: SidebarItem; collapsed?: boolean }) {
+function Item({ item, collapsed, linkAs }: { item: SidebarItem; collapsed?: boolean; linkAs?: React.ElementType }) {
     const cls = cn(
         'flex w-full items-center rounded-lg text-left text-[13px] transition-colors',
         // Collapsed, the icon IS the target, so it centres and the horizontal
@@ -89,10 +99,11 @@ function Item({ item, collapsed }: { item: SidebarItem; collapsed?: boolean }) {
 
     // A rail entry that changes the page is a link: middle-click, open-in-new-tab
     // and "copy link address" all work, and none of them do on a button.
+    const A = linkAs ?? 'a';
     return item.href ? (
-        <a href={item.href} title={name} aria-current={item.active ? 'page' : undefined} className={cls}>
+        <A href={item.href} title={name} aria-current={item.active ? 'page' : undefined} className={cls}>
             {body}
-        </a>
+        </A>
     ) : (
         <button type="button" title={name} onClick={item.onSelect} aria-current={item.active ? 'page' : undefined} disabled={item.disabled} className={cls}>
             {body}
@@ -100,7 +111,7 @@ function Item({ item, collapsed }: { item: SidebarItem; collapsed?: boolean }) {
     );
 }
 
-export function Sidebar({ groups, suffix, brand, collapsed, header, className, ...props }: SidebarProps) {
+export function Sidebar({ groups, suffix, brand, collapsed, header, linkAs, className, ...props }: SidebarProps) {
     return (
         <nav
             aria-label="Sidebar"
@@ -135,7 +146,7 @@ export function Sidebar({ groups, suffix, brand, collapsed, header, className, .
                             {g.title}
                         </span>
                     ) : null}
-                    {g.items.map((it, ii) => <Item key={ii} item={it} collapsed={collapsed} />)}
+                    {g.items.map((it, ii) => <Item key={ii} item={it} collapsed={collapsed} linkAs={linkAs} />)}
                 </React.Fragment>
             ))}
         </nav>
