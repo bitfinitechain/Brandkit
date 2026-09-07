@@ -4,6 +4,17 @@ import { Slot } from "@radix-ui/react-slot"
 
 import { cn } from "./lib/cn"
 
+/**
+ * The standard action control, in six variants and five sizes.
+ *
+ * Adapted from shadcn/ui (MIT). The deviations are the radius and the weight:
+ * `rounded-lg` and `font-semibold` rather than upstream's `rounded-md` and
+ * `font-medium`, because the Tailwind radius scale here maps to --r and a
+ * button is the one control that should read as pressable at a glance.
+ *
+ * `xs` is added to the size group for the dense controls in a dashboard
+ * toolbar, which upstream has no equivalent of.
+ */
 const buttonVariants = cva(
   "inline-flex shrink-0 items-center justify-center gap-2 rounded-lg text-sm font-semibold whitespace-nowrap transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
