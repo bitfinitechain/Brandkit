@@ -11,13 +11,13 @@ import React from 'react';
 // STRUCTURE and TYPOGRAPHY live here. COLOUR does not: the apps do not share
 // semantic token names (--foreground/--primary vs --fg/--acc), so each sets
 // --wm-fg and --wm-accent and the component stays neutral. That is the same
-// split tokens.css already makes — share primitives, not semantics.
+// split tokens.css already makes: share primitives, not semantics.
 export function Wordmark({
     accent = 'FINITE', lead = 'BIT', suffix, size = 'md', fluid, hideSuffixBelow = true, className,
 }: {
     lead?: string;
     accent?: string;
-    /** Product name after the lockup — EXPLORER, ANALYTICS, POOL. */
+    /** Product name after the lockup: EXPLORER, ANALYTICS, POOL. */
     suffix?: string;
     size?: 'sm' | 'md' | 'lg';
     /** Step 20px -> 24px at 768px instead of a fixed size. */

@@ -8,7 +8,7 @@ import { cn } from "./lib/cn"
 //     inputs this replaces. Upstream's 36px is right for a compact form; the
 //     address and label fields here sit beside a Watch button and read as a
 //     search bar.
-//  2. `rounded-lg` left alone — the Tailwind radius scale maps it to var(--r2),
+//  2. `rounded-lg` left alone: the Tailwind radius scale maps it to var(--r2),
 //     so the shadcn class already resolves to this app's token.
 //  3. A `mono` prop. Addresses, txids and API keys are entered here and every
 //     hand-rolled version set fontFamily: MONO; making it a prop is what stops

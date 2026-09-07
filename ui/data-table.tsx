@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { cn } from './lib/cn';
 
-// A grid "table" — the shape this dashboard actually uses, where a row is a CSS
+// A grid "table": the shape this dashboard actually uses, where a row is a CSS
 // grid rather than a <tr> so a cell can hold a gauge or a sparkline.
 //
 // It replaces SEVEN implementations: CardTable/CardTRow, TableWrap/THead/TRow,
@@ -17,7 +17,7 @@ import { cn } from './lib/cn';
 //    and will not shrink below its content, which silently disables the scroller;
 //  • width:auto + min-width:<min> inside, not width:100%, which crushes the table
 //    back to the container and squashes the columns;
-//  • an affordance is rendered when it scrolls — a silent scroller reads as
+//  • an affordance is rendered when it scrolls: a silent scroller reads as
 //    truncated data, which is how an admin once reported three of seven columns
 //    as "missing".
 export function DataTable({
@@ -40,7 +40,7 @@ export function DataTable({
                 </div>
             </div>
             {/* Shown only below the width where these tables actually overflow.
-                The breakpoint lives in the package's own data-table.css — it used
+                The breakpoint lives in the package's own data-table.css. It used
                 to borrow analytics' `ops-only-sm`, which meant the hint showed at
                 every width in the three apps that never defined it. */}
             <div className="bfx-dt__hint font-mono text-[10px] tracking-wider text-muted-foreground mt-1.5">
@@ -83,7 +83,7 @@ export function DataRow({
         className,
     );
 
-    // A navigable row is an anchor, not a div with onClick — it has to be
+    // A navigable row is an anchor, not a div with onClick: it has to be
     // focusable and openable in a new tab like any other link.
     return href
         ? <a href={href} className={cls} style={{ gridTemplateColumns: tpl }}>{inner}</a>

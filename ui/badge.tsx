@@ -8,14 +8,14 @@ import { cn } from "./lib/cn"
 //
 //  1. `rounded-full` became `rounded-pill`, a scale entry wired to --rb. A fully
 //     round badge is correct in cards mode and wrong in ledger, where every other
-//     corner is square — upstream has no concept of a second UI mode, so the one
+//     corner is square. Upstream has no concept of a second UI mode, so the one
 //     hardcoded radius was the single thing standing between this component and
 //     working in both. Nothing else needed changing, which is the useful result.
 //  2. Four ops tones added to the variant group (accent/ok/warn/bad). Additive:
 //     upstream's six variants are untouched, so a component copied from the docs
 //     still behaves as documented.
 //  3. A `mono` size, because the status pills across this dashboard are mono,
-//     uppercase and letterspaced — that is the house style for a pill, and having
+//     uppercase and letterspaced: that is the house style for a pill, and having
 //     it as a variant is what lets ~27 hand-written copies collapse into one name.
 const badgeVariants = cva(
   "inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-pill border border-transparent whitespace-nowrap transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 [&>svg]:pointer-events-none [&>svg]:size-3",
@@ -31,7 +31,7 @@ const badgeVariants = cva(
           "border-border text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
         ghost: "[a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
         link: "text-primary underline-offset-4 [a&]:hover:underline",
-        // ops tones — hairline box, tinted text, no fill. Reads as a status marker
+        // ops tones: hairline box, tinted text, no fill. Reads as a status marker
         // rather than a button, which is what these actually are.
         accent: "border-primary text-accink",
         ok: "border-success/45 text-success",

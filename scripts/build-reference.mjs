@@ -162,12 +162,12 @@ for (const [group, list] of groups) {
 
 const lede = `    <div class="lede">
       <h1>Component reference</h1>
-      <p>Every component in <code>@bitfinitechain/brandkit</code> — ${total} of them, ${symbols} exported
+      <p>Every component in <code>@bitfinitechain/brandkit</code>: ${total} of them, ${symbols} exported
          symbols.</p>
       <p class="note">Generated from <code>Brandkit/ui/*.tsx</code> at v${esc(pkg.version)} (${esc(sha)})
          by <code>scripts/build-reference.mjs</code>. The summaries, variants and exported symbols are
          read out of the source, so this page cannot promise an API the code does not have. The
-         rendered examples are hand-built from each component's own classes and token values — they
+         rendered examples are hand-built from each component's own classes and token values. They
          are a faithful likeness, not the live component, so treat the source as the authority if the
          two ever disagree.</p>
     </div>

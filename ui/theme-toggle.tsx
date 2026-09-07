@@ -9,7 +9,7 @@ import { cn } from './lib/cn';
 // into two different-looking controls: web, explorer and ckstats render a
 // borderless icon that cross-fades Sun and Moon, analytics a bordered 32px
 // square showing one icon at a time to match its ops chrome. Same job, same
-// brand, two appearances — which is what a shared component is for.
+// brand, two appearances, which is what a shared component is for.
 //
 // It takes the theme and a handler rather than reading either itself. That is
 // deliberate: three apps drive theme through next-themes and analytics through
@@ -18,7 +18,7 @@ import { cn } from './lib/cn';
 // working theme system. The BUTTON is what was duplicated; the state never was.
 //
 // Both original implementations showed the CURRENT theme rather than the action,
-// so that convention is kept — a Moon means you are in dark, not that clicking
+// so that convention is kept: a Moon means you are in dark, not that clicking
 // gets you there.
 const themeToggle = cva(
     'inline-flex items-center justify-center transition-colors cursor-pointer ' +

@@ -5,8 +5,8 @@ import { ThemeProvider as NextThemesProvider } from 'next-themes';
 
 // Our next-themes configuration, in one place.
 //
-// Three apps mounted this with byte-identical props — attribute="class",
-// defaultTheme="dark", enableSystem, disableTransitionOnChange — which is four
+// Three apps mounted this with byte-identical props (attribute="class",
+// defaultTheme="dark", enableSystem, disableTransitionOnChange), which is four
 // decisions repeated three times and three chances to change one of them by
 // accident. They are defaults here now, still overridable per app.
 //

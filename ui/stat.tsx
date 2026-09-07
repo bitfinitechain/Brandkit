@@ -3,15 +3,15 @@ import { cva, type VariantProps } from 'class-variance-authority';
 
 import { cn } from './lib/cn';
 
-// One stat tile. This replaces five near-identical implementations — Kpi and
-// StatCell in cardui, Stat and Mini in MinerConsole, and the status page's own —
+// One stat tile. This replaces five near-identical implementations (Kpi and
+// StatCell in cardui, Stat and Mini in MinerConsole, and the status page's own),
 // which had already drifted: only some carried a tone, only some had a sub-line,
 // and only one of them could express "degraded", which is why a half-offline
 // miner rendered in the healthy colour for months.
 //
 // Written against the token bridge, not against fixed colours, so it follows
 // cards/ledger and both themes with no conditional at the call site. The only
-// hard requirement on a host project is that those tokens exist — see the
+// hard requirement on a host project is that those tokens exist; see the
 // contract in Brandkit/ui/README.md.
 const statVariants = cva(
     'flex flex-col rounded-lg border border-border bg-card',
@@ -48,7 +48,7 @@ const valueTone = cva('font-mono font-bold leading-tight tabular-nums', {
 export type StatTone = NonNullable<VariantProps<typeof valueTone>['tone']>;
 
 // The sub-line borrows the tone but not the value's typography, so it is a plain
-// lookup rather than a second cva — deriving it by stripping classes out of
+// lookup rather than a second cva. Deriving it by stripping classes out of
 // valueTone's output worked until someone added a class to valueTone.
 const toneText: Record<StatTone, string> = {
     default: 'text-foreground', accent: 'text-primary', muted: 'text-muted-foreground',
@@ -70,7 +70,7 @@ export function Stat({
                 {label}
             </div>
             {/* Never wrap a figure away from its unit, and never let the digits
-                shift as they update — tabular-nums is on the value, not the tile. */}
+                shift as they update: tabular-nums is on the value, not the tile. */}
             <div className={cn(valueTone({ tone, size }), 'whitespace-nowrap')}>{value}</div>
             {sub && <div className={cn('text-[12px] leading-snug', toneText[subTone ?? 'muted'])}>{sub}</div>}
         </div>

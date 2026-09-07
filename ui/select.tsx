@@ -5,7 +5,7 @@ import { cn } from "./lib/cn"
 
 // A native <select> wearing the shadcn field styling.
 //
-// NOT shadcn's Select, deliberately. That one is a Radix listbox — nine more
+// NOT shadcn's Select, deliberately. That one is a Radix listbox: nine more
 // files, another dependency, and a popover that has to be positioned. The five
 // selects in this dashboard are short static lists (interval, page size, role)
 // where the platform control is better: it is keyboard-accessible for free, uses
@@ -13,7 +13,7 @@ import { cn } from "./lib/cn"
 //
 // What it borrows from shadcn is the FIELD: same height, radius, border, focus
 // ring and disabled treatment as Input, so a select and a text field sitting
-// next to each other line up. That is the actual goal — one visual language,
+// next to each other line up. That is the actual goal: one visual language,
 // not one implementation.
 function Select({
     className,
