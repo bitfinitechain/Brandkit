@@ -58,6 +58,12 @@ export { Textarea } from './textarea';
 export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from './tooltip';
 
 // ---- the rest of the shadcn set ------------------------------------------
+// Chart and Toaster are NOT here, for the same reason ThemeProvider is not:
+// they import a peer that a consuming app may not have (recharts, next-themes),
+// and this file is typechecked by every app that installs the package. Import
+// them by subpath instead:
+//     '@bitfinitechain/brandkit/ui/chart'
+//     '@bitfinitechain/brandkit/ui/sonner'
 // The chat primitives (Attachment, Bubble, Marker, Message, Message Scroller,
 // Questionnaire) are deliberately absent: they are for an assistant UI and
 // nothing in BFX is one.
@@ -78,10 +84,6 @@ export {
     Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext,
     type CarouselProps, type CarouselApi,
 } from './carousel';
-export {
-    ChartContainer, ChartStyle, ChartTooltip, ChartTooltipContent,
-    ChartLegend, ChartLegendContent, useChart, type ChartConfig,
-} from './chart';
 export { Combobox, type ComboboxProps, type ComboboxOption } from './combobox';
 export {
     Command, CommandDialog, CommandInput, CommandList, CommandEmpty,
@@ -132,7 +134,6 @@ export {
     SheetHeader, SheetFooter, SheetTitle, SheetDescription,
 } from './sheet';
 export { Slider } from './slider';
-export { Toaster, toast } from './sonner';
 export {
     Table, TableHeader, TableBody, TableFooter, TableRow, TableHead, TableCell, TableCaption,
 } from './table';

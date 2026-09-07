@@ -1,6 +1,6 @@
 {
   "name": "@bitfinitechain/brandkit",
-  "version": "1.14.0",
+  "version": "1.14.1",
   "description": "BitFinite design tokens and shared UI components",
   "license": "SEE LICENSE IN LICENSE.md",
   "repository": {
@@ -19,6 +19,8 @@
     ".": "./ui/index.ts",
     "./styles.css": "./ui/styles.css",
     "./ui/theme-provider": "./ui/theme-provider.tsx",
+    "./ui/chart": "./ui/chart.tsx",
+    "./ui/sonner": "./ui/sonner.tsx",
     "./tokens.css": "./tokens/tokens.css",
     "./ui/*": "./ui/*",
     "./package.json": "./package.json"

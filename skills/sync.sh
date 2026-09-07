@@ -104,6 +104,10 @@ if [ -d "$UI_DIR" ]; then
     # build on a module it must never gain. Gate it like cva: the component travels
     # only to repos that already made that choice.
     has_themes=0; grep -q '"next-themes"' "$target/package.json" 2>/dev/null && has_themes=1
+    # recharts is the same shape of problem: an OPTIONAL peer that only Chart
+    # imports. Four apps draw with our own chart set and should not gain a
+    # charting library because a file they never render sits in the package.
+    has_recharts=0; grep -q '"recharts"' "$target/package.json" 2>/dev/null && has_recharts=1
     wrote=0; skipped=""
     for f in "$UI_DIR"/*.tsx; do
       [ -e "$f" ] || continue
@@ -114,6 +118,7 @@ if [ -d "$UI_DIR" ]; then
       need=""
       grep -q "from 'class-variance-authority'" "$f" && [ "$has_cva" -eq 0 ] && need="cva"
       grep -q "from 'next-themes'" "$f" && [ "$has_themes" -eq 0 ] && need="next-themes"
+      grep -q "from 'recharts'" "$f" && [ "$has_recharts" -eq 0 ] && need="recharts"
       if [ -n "$need" ]; then skipped="$skipped $base($need)"; continue; fi
       {
         echo "// GENERATED — do not edit here."
