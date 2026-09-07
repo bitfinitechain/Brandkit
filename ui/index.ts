@@ -56,3 +56,87 @@ export { Spinner, type SpinnerProps } from './spinner';
 export { Switch, type SwitchProps } from './switch';
 export { Textarea } from './textarea';
 export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from './tooltip';
+
+// ---- the rest of the shadcn set ------------------------------------------
+// The chat primitives (Attachment, Bubble, Marker, Message, Message Scroller,
+// Questionnaire) are deliberately absent: they are for an assistant UI and
+// nothing in BFX is one.
+export { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from './accordion';
+export {
+    AlertDialog, AlertDialogTrigger, AlertDialogPortal, AlertDialogOverlay, AlertDialogContent,
+    AlertDialogHeader, AlertDialogFooter, AlertDialogTitle, AlertDialogDescription,
+    AlertDialogAction, AlertDialogCancel,
+} from './alert-dialog';
+export { AspectRatio } from './aspect-ratio';
+export {
+    Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage,
+    BreadcrumbSeparator, BreadcrumbEllipsis,
+} from './breadcrumb';
+export { ButtonGroup, ButtonGroupText, buttonGroupVariants, type ButtonGroupProps } from './button-group';
+export { Calendar, type CalendarProps } from './calendar';
+export {
+    Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext,
+    type CarouselProps, type CarouselApi,
+} from './carousel';
+export {
+    ChartContainer, ChartStyle, ChartTooltip, ChartTooltipContent,
+    ChartLegend, ChartLegendContent, useChart, type ChartConfig,
+} from './chart';
+export { Combobox, type ComboboxProps, type ComboboxOption } from './combobox';
+export {
+    Command, CommandDialog, CommandInput, CommandList, CommandEmpty,
+    CommandGroup, CommandItem, CommandSeparator, CommandShortcut,
+} from './command';
+export {
+    ContextMenu, ContextMenuTrigger, ContextMenuContent, ContextMenuItem, ContextMenuCheckboxItem,
+    ContextMenuRadioItem, ContextMenuLabel, ContextMenuSeparator, ContextMenuShortcut,
+    ContextMenuGroup, ContextMenuSub, ContextMenuSubContent, ContextMenuSubTrigger, ContextMenuRadioGroup,
+} from './context-menu';
+export { DatePicker, type DatePickerProps } from './date-picker';
+export {
+    Dialog, DialogPortal, DialogOverlay, DialogClose, DialogTrigger,
+    DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription,
+} from './dialog';
+export { DirectionProvider } from './direction';
+export {
+    Drawer, DrawerPortal, DrawerOverlay, DrawerTrigger, DrawerClose,
+    DrawerContent, DrawerHeader, DrawerFooter, DrawerTitle, DrawerDescription,
+} from './drawer';
+export {
+    DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem,
+    DropdownMenuCheckboxItem, DropdownMenuRadioItem, DropdownMenuLabel, DropdownMenuSeparator,
+    DropdownMenuShortcut, DropdownMenuGroup, DropdownMenuPortal, DropdownMenuSub,
+    DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuRadioGroup,
+} from './dropdown-menu';
+export { Field, type FieldProps } from './field';
+export { HoverCard, HoverCardTrigger, HoverCardContent } from './hover-card';
+export { InputGroup, InputGroupAddon } from './input-group';
+export { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator } from './input-otp';
+export { Item, ItemMedia, ItemContent, ItemTitle, ItemDescription, ItemActions } from './item';
+export {
+    Menubar, MenubarMenu, MenubarTrigger, MenubarContent, MenubarItem, MenubarCheckboxItem,
+    MenubarRadioItem, MenubarLabel, MenubarSeparator, MenubarShortcut, MenubarGroup,
+    MenubarSub, MenubarSubContent, MenubarSubTrigger, MenubarRadioGroup,
+} from './menubar';
+export { NativeSelect } from './native-select';
+export {
+    NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger,
+    NavigationMenuContent, NavigationMenuLink, NavigationMenuIndicator, NavigationMenuViewport,
+    navigationMenuTriggerStyle,
+} from './navigation-menu';
+export { RadioGroup, RadioGroupItem } from './radio-group';
+export { ResizablePanelGroup, ResizablePanel, ResizableHandle } from './resizable';
+export { ScrollArea, ScrollBar } from './scroll-area';
+export {
+    Sheet, SheetTrigger, SheetClose, SheetPortal, SheetContent,
+    SheetHeader, SheetFooter, SheetTitle, SheetDescription,
+} from './sheet';
+export { Slider } from './slider';
+export { Toaster, toast } from './sonner';
+export {
+    Table, TableHeader, TableBody, TableFooter, TableRow, TableHead, TableCell, TableCaption,
+} from './table';
+export { Tabs, TabsList, TabsTrigger, TabsContent } from './tabs';
+export { Toggle, toggleVariants, type ToggleProps } from './toggle';
+export { ToggleGroup, ToggleGroupItem } from './toggle-group';
+export { Prose } from './typography';

@@ -58,3 +58,67 @@
   /* Without the travelling sheen a skeleton still has to read as "not content". */
   .bfx-skeleton::after { transform: none; background-image: none; }
 }
+
+/* ---- Overlays and popovers -------------------------------------------------
+   Dialog, AlertDialog, Sheet, Drawer, DropdownMenu, ContextMenu, Menubar,
+   HoverCard and Command all open the same way, so they animate the same way.
+   Radix drives these with data-state, which is why one rule can cover nine
+   components. */
+.bfx-overlay[data-state='open']   { animation: bfx-fade-in  150ms var(--bfx-ease-out, cubic-bezier(.22,1,.36,1)); }
+.bfx-overlay[data-state='closed'] { animation: bfx-fade-out 120ms ease-in; }
+
+.bfx-pop[data-state='open']   { animation: bfx-pop-in  150ms var(--bfx-ease-out, cubic-bezier(.22,1,.36,1)); }
+.bfx-pop[data-state='closed'] { animation: bfx-pop-out 120ms ease-in; }
+
+@keyframes bfx-fade-in  { from { opacity: 0; } }
+@keyframes bfx-fade-out { to   { opacity: 0; } }
+@keyframes bfx-pop-in   { from { opacity: 0; transform: translate(var(--bfx-pop-x, 0), var(--bfx-pop-y, 0)) scale(.97); } }
+@keyframes bfx-pop-out  { to   { opacity: 0; transform: translate(var(--bfx-pop-x, 0), var(--bfx-pop-y, 0)) scale(.97); } }
+
+/* Dialog and AlertDialog are centred with a translate, so their pop animation
+   has to keep it or they jump to the corner and back on every open. */
+[data-slot='dialog-content'],
+[data-slot='alert-dialog-content'] { --bfx-pop-x: -50%; --bfx-pop-y: -50%; }
+
+/* ---- Sheet ----------------------------------------------------------------
+   Slides from the edge it is anchored to. */
+.bfx-sheet--right[data-state='open']   { animation: bfx-in-right  200ms var(--bfx-ease-out, cubic-bezier(.22,1,.36,1)); }
+.bfx-sheet--right[data-state='closed'] { animation: bfx-out-right 160ms ease-in; }
+.bfx-sheet--left[data-state='open']    { animation: bfx-in-left   200ms var(--bfx-ease-out, cubic-bezier(.22,1,.36,1)); }
+.bfx-sheet--left[data-state='closed']  { animation: bfx-out-left  160ms ease-in; }
+.bfx-sheet--top[data-state='open']     { animation: bfx-in-top    200ms var(--bfx-ease-out, cubic-bezier(.22,1,.36,1)); }
+.bfx-sheet--top[data-state='closed']   { animation: bfx-out-top   160ms ease-in; }
+.bfx-sheet--bottom[data-state='open']  { animation: bfx-in-bottom 200ms var(--bfx-ease-out, cubic-bezier(.22,1,.36,1)); }
+.bfx-sheet--bottom[data-state='closed']{ animation: bfx-out-bottom 160ms ease-in; }
+
+@keyframes bfx-in-right   { from { transform: translateX(100%); } }
+@keyframes bfx-out-right  { to   { transform: translateX(100%); } }
+@keyframes bfx-in-left    { from { transform: translateX(-100%); } }
+@keyframes bfx-out-left   { to   { transform: translateX(-100%); } }
+@keyframes bfx-in-top     { from { transform: translateY(-100%); } }
+@keyframes bfx-out-top    { to   { transform: translateY(-100%); } }
+@keyframes bfx-in-bottom  { from { transform: translateY(100%); } }
+@keyframes bfx-out-bottom { to   { transform: translateY(100%); } }
+
+/* ---- Accordion ------------------------------------------------------------
+   Radix measures the panel and exposes its height as a variable, which is the
+   only way to animate to "auto". overflow:hidden is required or the content
+   spills while it moves. */
+.bfx-accordion[data-state='open']   { animation: bfx-acc-down 180ms var(--bfx-ease-out, cubic-bezier(.22,1,.36,1)); }
+.bfx-accordion[data-state='closed'] { animation: bfx-acc-up   150ms ease-in; }
+@keyframes bfx-acc-down { from { height: 0; }                                        to { height: var(--radix-accordion-content-height); } }
+@keyframes bfx-acc-up   { from { height: var(--radix-accordion-content-height); }    to { height: 0; } }
+
+/* ---- One-time code --------------------------------------------------------
+   The fake caret, because the real one belongs to the single hidden input. */
+.bfx-caret { animation: bfx-blink 1s step-end infinite; }
+@keyframes bfx-blink { 50% { opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .bfx-overlay[data-state],
+  .bfx-pop[data-state],
+  .bfx-sheet--right[data-state], .bfx-sheet--left[data-state],
+  .bfx-sheet--top[data-state],   .bfx-sheet--bottom[data-state],
+  .bfx-accordion[data-state],
+  .bfx-caret { animation: none; }
+}
