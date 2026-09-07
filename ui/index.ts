@@ -22,6 +22,7 @@ export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 export { Input } from './input';
 export { Select } from './select';
 export { DataTable, DataRow, DataEmpty } from './data-table';
+export { Pagination, paginationRange, type PaginationProps } from './pagination';
 export { EmptyState, type EmptyStateProps } from './empty-state';
 export { CopyField, type CopyFieldProps } from './copy-field';
 // Charts. `chartToneClass` and `ChartTone` live in sparkline.tsx because that is
