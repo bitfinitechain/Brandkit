@@ -96,36 +96,69 @@ if [ -d "$UI_DIR" ]; then
     # a repo can have one without the other — ckstats has src/lib/utils.ts but no
     # class-variance-authority, so treating "has lib/utils.ts" as "is bridged"
     # shipped it a component it could not compile.
-    has_cn=0;  { [ -f "$target/lib/utils.ts" ] || [ -f "$target/src/lib/utils.ts" ]; } && has_cn=1
-    has_cva=0; grep -q '"class-variance-authority"' "$target/package.json" 2>/dev/null && has_cva=1
-    # next-themes is a real peer dependency, not a styling bridge. analytics
-    # deliberately does NOT use it - it flips data-theme on <html> from a pre-paint
-    # script so there is no flash - so vendoring theme-provider.tsx there broke the
-    # build on a module it must never gain. Gate it like cva: the component travels
-    # only to repos that already made that choice.
-    has_themes=0; grep -q '"next-themes"' "$target/package.json" 2>/dev/null && has_themes=1
-    # recharts is the same shape of problem: an OPTIONAL peer that only Chart
-    # imports. Four apps draw with our own chart set and should not gain a
-    # charting library because a file they never render sits in the package.
-    has_recharts=0; grep -q '"recharts"' "$target/package.json" 2>/dev/null && has_recharts=1
     wrote=0; skipped=""
     for f in "$UI_DIR"/*.tsx; do
       [ -e "$f" ] || continue
       base="$(basename "$f")"
-      # Only the imports this component actually makes are required of the repo.
-      # cn() now ships INSIDE the package (ui/lib/cn.ts), so a component no longer
-      # needs the app to provide it. cva is still an external dependency.
+      # A component only travels to a repo that can COMPILE it.
+      #
+      # This used to name the awkward dependencies one at a time - cva, then
+      # next-themes, then recharts - and each was added the day a vendored file
+      # broke a consumer's build. Once the kit grew Radix-backed components the
+      # list was hopeless: analytics gained twenty files importing packages it
+      # has never installed, and tsc failed on every one.
+      #
+      # So the gate reads the imports instead of guessing them. Every bare
+      # module a component imports has to be in the target's package.json, with
+      # the exception of what every BFX app has by construction (react, next,
+      # lucide-react) and the package's own relative imports.
+      #
+      # A skipped component is not lost: the app imports it from
+      # '@bitfinitechain/brandkit', where pnpm resolves the package's OWN
+      # dependencies. Vendoring is the fallback, not the contract.
       need=""
-      grep -q "from 'class-variance-authority'" "$f" && [ "$has_cva" -eq 0 ] && need="cva"
-      grep -q "from 'next-themes'" "$f" && [ "$has_themes" -eq 0 ] && need="next-themes"
-      grep -q "from 'recharts'" "$f" && [ "$has_recharts" -eq 0 ] && need="recharts"
-      if [ -n "$need" ]; then skipped="$skipped $base($need)"; continue; fi
+      # Both quote styles: the files promoted from shadcn use double quotes and
+      # the ones written here use single, and a gate that reads only one of them
+      # waves the other straight through.
+      for mod in $(grep -oE "from ['\"][^.@/][^'\"]*['\"]|from ['\"]@[^/'\"]+/[^'\"]+['\"]" "$f" \
+                   | sed -E "s/^from ['\"]//; s/['\"]$//" | sort -u); do
+        case "$mod" in
+          react|react-dom|react/*|react-dom/*|next|next/*|lucide-react) continue ;;
+        esac
+        grep -q "\"$mod\"" "$target/package.json" 2>/dev/null || need="$need $mod"
+      done
+      if [ -n "$need" ]; then skipped="$skipped $base($(echo $need | tr ' ' ','))"; continue; fi
       {
         echo "// GENERATED — do not edit here."
         echo "// Canonical: Brandkit/ui/$base   ·   update there, then: bash skills/sync.sh"
         cat "$f"
       } > "$dest/$base"
       wrote=$((wrote + 1)); ui_synced=$((ui_synced + 1))
+    done
+
+    # A component whose SIBLING was skipped cannot compile either.
+    #
+    # Combobox is popover plus command, and DatePicker is popover plus calendar;
+    # both survived the import gate because their own dependencies are fine, and
+    # both then failed on "cannot find module './command'". So this runs to a
+    # fixpoint: drop anything importing a sibling that is not there, and repeat,
+    # because dropping one can orphan the next.
+    changed=1
+    while [ "$changed" -eq 1 ]; do
+      changed=0
+      for g in "$dest"/*.tsx; do
+        [ -e "$g" ] || continue
+        gbase="$(basename "$g")"
+        for sib in $(grep -oE "from '\./[a-z0-9-]+'" "$g" | sed "s|^from './||; s|'$||" | sort -u); do
+          [ -f "$dest/$sib.tsx" ] && continue
+          [ -f "$UI_DIR/$sib.tsx" ] || continue      # not a component: leave it alone
+          rm -f "$g"
+          skipped="$skipped $gbase(needs $sib)"
+          wrote=$((wrote - 1)); ui_synced=$((ui_synced - 1))
+          changed=1
+          break
+        done
+      done
     done
     # The package's internal helpers travel with the components that import them.
     # Missing this is a build break, not a style regression: a synced stat.tsx
