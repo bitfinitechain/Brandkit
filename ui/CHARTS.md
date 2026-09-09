@@ -60,10 +60,16 @@ multiples, or indexing both to a common base.
 
 ## Grouping: one shape family per card
 
-**Columns and arcs do not share a card.** A reader scanning a dashboard groups
-by silhouette before they read a single label, so a card holding a bar chart
-above a ring reads as two unrelated things stacked, and the eye has to
-re-anchor halfway down it.
+**Do not STACK a ring above a bar chart.** A reader scanning a dashboard groups
+by silhouette before they read a single label, so two families in one column
+read as two unrelated blocks and the eye re-anchors halfway down the card.
+
+**Side by side is different, and often right.** Across a clear vertical split
+the same two shapes read as two halves of one answer: what reported itself on
+the left, what the names suggest on the right, compared by looking across
+rather than by scrolling. The rule is about stacking, not about co-location.
+The first version of this rule said "never share a card", which was too strong
+and produced two half-empty cards where one dense one was better.
 
 Two families, and a card belongs to exactly one:
 
