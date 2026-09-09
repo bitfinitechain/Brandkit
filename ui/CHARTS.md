@@ -58,11 +58,43 @@ multiples, or indexing both to a common base.
 
 ---
 
+## Grouping: one shape family per card
+
+**Columns and arcs do not share a card.** A reader scanning a dashboard groups
+by silhouette before they read a single label, so a card holding a bar chart
+above a ring reads as two unrelated things stacked, and the eye has to
+re-anchor halfway down it.
+
+Two families, and a card belongs to exactly one:
+
+| family | shapes |
+|---|---|
+| **rectilinear** | `BarChart`, `Progress`, `LineChart`, `Sparkline` |
+| **circular** | `Gauge`, `Donut`, `Radial` |
+
+Within a family, inline is good: a gauge beside a radial reads as one group
+because the silhouettes rhyme. Across families, split the card.
+
+**Order the rows by what leads the story, not by size.** Where one category
+dominates a comparison, the columns go first and full width, because that
+dominant bar is usually the finding. The circular readouts follow.
+
+A stat tile with a number and no plot is neutral and sits with either.
+
+---
+
 ## Colour
 
 Tones are **semantic first**: `ok`, `warn` and `bad` mean good, warning and
-critical. That leaves `accent` and `muted` as freely categorical, and it is why
-a part-of-whole caps at three named categories plus a muted "Other".
+critical, so they are never series colours. Categories use the dedicated ramp,
+`--chart-1` to `--chart-4` plus `--chart-other`, which is why a part-of-whole
+caps at four named categories and a roll-up.
+
+**The ramp is measured, not chosen.** Every stop sits inside the OKLCH lightness
+band for its mode, clears the chroma floor and 3:1 on its surface, and clears
+the colour-blind separation target against its neighbours. Re-run the check
+before changing one: a stop that looks better alone routinely collapses a CVD
+pair.
 
 **Never paint a category `bad`.** A hardware brand or a wallet cohort rendered
 red reads as an alert, and the reader believes it before they read the legend.
