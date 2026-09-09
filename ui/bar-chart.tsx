@@ -15,6 +15,16 @@ export interface BarDatum {
     /** Printed above the bar. Pass a formatted string; the chart does not guess units. */
     valueLabel?: React.ReactNode;
     tone?: ChartTone;
+    /**
+     * A categorical colour, overriding `tone`. Use a token
+     * ('var(--chart-1)'), never a hex.
+     *
+     * Exists because the tones are SEMANTIC: ok, warn and bad mean good,
+     * caution and critical. A series list that cycles them paints the second
+     * category green and the third amber, and a reader takes that as a verdict
+     * before reaching the legend. Categories carry identity, not judgement.
+     */
+    color?: string;
 }
 
 // 'title' is omitted from the div props on purpose: on an element that is the
@@ -51,10 +61,10 @@ export function BarChart({
                             </span>
                             <div
                                 className={cn(
-                                    'w-full max-w-[44px] rounded-t bg-current transition-[height] duration-[400ms] ease-out hover:opacity-80 motion-reduce:transition-none',
-                                    chartToneClass[d.tone ?? tone],
+                                    'w-full max-w-[44px] rounded-t transition-[height] duration-[400ms] ease-out hover:opacity-80 motion-reduce:transition-none',
+                                    d.color ? '' : cn('bg-current', chartToneClass[d.tone ?? tone]),
                                 )}
-                                style={{ height: `${pct}%` }}
+                                style={{ height: `${pct}%`, ...(d.color ? { background: d.color } : {}) }}
                             />
                         </div>
                     );

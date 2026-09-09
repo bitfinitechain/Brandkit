@@ -12,6 +12,8 @@ export interface DonutSegment {
     label: React.ReactNode;
     value: number;
     tone?: ChartTone;
+    /** Categorical colour, overriding `tone`. A token, never a hex. See BarChart. */
+    color?: string;
 }
 
 export interface DonutProps extends React.ComponentProps<'div'> {
@@ -60,7 +62,8 @@ export function Donut({
                             strokeDasharray={`${a.pct} 100`}
                             strokeDashoffset={a.offset}
                             transform="rotate(-90 60 60)"
-                            className={cn('bfx-arc', chartToneClass[a.tone])}
+                            className={cn('bfx-arc', a.color ? '' : chartToneClass[a.tone])}
+                            style={a.color ? { color: a.color } : undefined}
                         />
                     ))}
                 </svg>
@@ -77,7 +80,11 @@ export function Donut({
                 <div className="flex min-w-0 flex-col gap-2">
                     {arcs.map((a, i) => (
                         <div key={i} className="flex items-center gap-2 text-xs">
-                            <span className={cn('h-2 w-2 shrink-0 rounded-full bg-current', chartToneClass[a.tone])} aria-hidden="true" />
+                            <span
+                                className={cn('h-2 w-2 shrink-0 rounded-full bg-current', a.color ? '' : chartToneClass[a.tone])}
+                                style={a.color ? { color: a.color } : undefined}
+                                aria-hidden="true"
+                            />
                             <span className="min-w-0 truncate text-muted-foreground">{a.label}</span>
                             <span className="ml-auto font-mono tabular-nums text-foreground">{a.pct.toFixed(1)}%</span>
                         </div>
