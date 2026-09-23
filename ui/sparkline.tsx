@@ -14,7 +14,7 @@ import { cn } from './lib/cn';
 export type ChartTone = 'accent' | 'ok' | 'warn' | 'bad' | 'muted';
 
 export const chartToneClass: Record<ChartTone, string> = {
-    accent: 'text-primary',
+    accent: 'text-primary-ink',
     ok: 'text-success',
     warn: 'text-warning',
     bad: 'text-destructive',

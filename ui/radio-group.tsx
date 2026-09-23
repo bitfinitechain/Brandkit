@@ -22,6 +22,9 @@ export function RadioGroupItem({ className, ...props }: React.ComponentProps<typ
         <RadioGroupPrimitive.Item
             data-slot="radio-group-item"
             className={cn(
+                // FILL, not ink. The indicator is a solid dot and a border, so it
+                // stays on --primary like every other fill; the ink stop is for
+                // accent TEXT. See tokens.css on the two stops.
                 'aspect-square size-4 shrink-0 rounded-full border border-border bg-card text-primary outline-none',
                 'transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:ring-ring/40',
                 'data-[state=checked]:border-primary disabled:cursor-not-allowed disabled:opacity-50', className)}

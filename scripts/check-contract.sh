@@ -13,14 +13,14 @@
 # author tested, silently wrong everywhere else. A component in here is a promise
 # that it works in every app, so the promise gets checked.
 #
-# The contract is the shadcn semantic set, which all four apps already defined,
+# The contract is the shadcn semantic set, which all five apps already defined,
 # plus a status trio because shadcn has `destructive` but no success or warning.
 # ============================================================================
 set -uo pipefail
 cd "$(dirname "$0")/.."
 
 CONTRACT="background foreground card card-foreground popover popover-foreground
-primary primary-foreground secondary secondary-foreground muted muted-foreground
+primary primary-ink primary-foreground secondary secondary-foreground muted muted-foreground
 accent accent-foreground destructive destructive-foreground border input ring
 success warning"
 
@@ -34,19 +34,21 @@ wrap nowrap balance pretty ellipsis clip auto none inherit current transparent
 white black
 b t l r x y s e sm base lg xl 2xl 3xl 4xl 5xl 6xl 7xl 8xl 9xl xs"
 
-# ---- known gap, tracked not silenced ----------------------------------------
-# `accink` is the accent rendered as INK rather than as a fill. The contract has no
-# word for it: `primary` is the fill, and on a dark panel it measures 3.46:1, which
-# fails AA as text. analytics derives it as a 65% mix tuned so every tenant accent
-# clears AA in BOTH themes, and check:accents fails the build if one stops doing so.
+# ---- the gap that used to live here is CLOSED (2026-09-23) -------------------
+# `primary-ink` is the accent rendered as INK rather than as a fill, and it is in
+# CONTRACT above now. `primary` is the fill; on a dark panel it measures 3.46:1
+# and fails AA as text, which is why one name could never serve both roles.
 #
-# So this is a missing contract name, not a stray one. The real fix is to define it
-# in explorer, web and ckstats and move it into CONTRACT above — a decision about
-# their colour systems. Until then it is listed HERE rather than there, so the list
-# above keeps meaning "every app defines this" and CI stays green for everything
-# else. A check that is always red is a check nobody reads, which is how eighteen
-# findings sat unlooked-at for four days.
-KNOWN_GAP="accink"
+# It moved out of this block by doing what this block asked for: web, explorer and
+# ckstats each define --primary-ink (light blue-700, dark blue-500), trader-ui
+# already did, and analytics aliases --color-primary-ink onto its own --acc-ink,
+# the 65% mix that keeps every TENANT accent clearing AA in both themes. So all
+# five apps define it and the list above still means "every app defines this".
+#
+# Nothing is tracked here now. Keep the block: the next missing contract name goes
+# here rather than into CONTRACT, so CI stays green for everything else while the
+# apps catch up. A check that is always red is a check nobody reads.
+KNOWN_GAP=""
 
 bad=0
 report() { echo "  $1"; bad=$((bad + 1)); }
@@ -116,8 +118,8 @@ if [ "$bad" -gt 0 ]; then
     echo "$CONTRACT" | tr -s ' \n' ' ' | fold -s -w 72 | sed 's/^/  /'
     echo
     echo "Adding a name means adding it to ui/README.md AND defining it in all"
-    echo "four apps first — a component that ships ahead of its token is invisible"
+    echo "five apps first — a component that ships ahead of its token is invisible"
     echo "breakage: the build passes, the page loads, the styling is simply absent."
     exit 1
 fi
-echo "contract: clean — colours, vars, classes and sizes all resolve in all four apps"
+echo "contract: clean — colours, vars, classes and sizes all resolve in all five apps"

@@ -113,17 +113,28 @@ in one combination and obvious in another.
 
 ## The colour contract
 
-A component here may only use these colour names. All four apps define every one
-of them; each app chooses its own values behind them.
+A component here may only use these colour names. All five consuming apps define
+every one of them, and each chooses its own values behind them: **bitfinite-web,
+bitfinite-explorer, ckstats-bfx, bitfinite-analytics and bfx-trader-ui**. Naming
+them here rather than counting them is what stops the count drifting when the
+next app installs Brandkit.
 
     background   foreground        card      card-foreground
-    popover      popover-foreground primary  primary-foreground
+    popover      popover-foreground primary  primary-ink  primary-foreground
     secondary    secondary-foreground muted  muted-foreground
     accent       accent-foreground  destructive  destructive-foreground
     border       input              ring
     success      warning
 
-The last two are the contract's only addition to the shadcn set — shadcn has
+**`primary-ink` is the accent as TEXT; `primary` is the accent as a FILL.** One
+name cannot do both jobs: `#0644f1` is 6.76:1 under a white label and 3.46:1 as
+text on a dark panel, so using the fill as ink fails AA. Added 2026-09-23, after
+all five apps defined it. Light and dark both resolve it: web, explorer, ckstats
+and trader-ui map blue-700 / blue-500, and analytics aliases it onto its own
+`--acc-ink`, the 65% mix that keeps every tenant accent clearing AA in both
+themes. Fills, borders, rings and `primary-foreground` all stay on `primary`.
+
+The last two of the status pair are the contract's only addition to the shadcn set — shadcn has
 `destructive` but no success or warning, and every one of our apps needed them.
 Analytics calls them `--ok`/`--warn` internally and aliases them; the other three
 already used `--success`/`--warning`.
@@ -134,9 +145,9 @@ in analytics. Installed anywhere else it would have rendered with no background,
 no border and inherited text, while the build passed and the page loaded.
 Nothing would have reported it. `scripts/check-contract.sh` fails on any colour
 name outside the list above, because a component in here is a promise that it
-works in all four apps.
+works in all five apps.
 
-Adding a name means adding it to this list **and** defining it in all four apps
+Adding a name means adding it to this list **and** defining it in all five apps
 first. A component that ships ahead of its token is invisible breakage.
 
 ## Packaging

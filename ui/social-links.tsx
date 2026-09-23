@@ -83,7 +83,7 @@ export function SocialLinks({ only, urls, className, ...props }: SocialLinksProp
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={LABEL[k]}
-                    className="text-muted-foreground hover:text-primary transition-colors"
+                    className="text-muted-foreground hover:text-primary-ink transition-colors"
                 >
                     {k === 'github' ? <StrokeMark paths={GITHUB_PATHS} label={LABEL.github} />
                         : k === 'bitcointalk' ? <MessagesSquare className="w-5 h-5" aria-hidden="true" />

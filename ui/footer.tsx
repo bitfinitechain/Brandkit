@@ -40,7 +40,7 @@ export interface FooterProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 function FooterAnchor({ link }: { link: FooterLink }) {
-    const cls = 'hover:text-primary transition-colors';
+    const cls = 'hover:text-primary-ink transition-colors';
     // A real <a> for anything leaving the app: next/link prefetching a third
     // party is pointless, and the noopener/noreferrer pair has to travel with
     // target="_blank" rather than be remembered at each call site.

@@ -25,7 +25,7 @@ const alertVariants = cva(
         variants: {
             variant: {
                 default: 'border-border bg-card text-foreground',
-                accent: 'border-primary/40 bg-primary/8 text-foreground [&>svg]:text-primary',
+                accent: 'border-primary/40 bg-primary/8 text-foreground [&>svg]:text-primary-ink',
                 ok: 'border-success/40 bg-success/8 text-foreground [&>svg]:text-success',
                 warn: 'border-warning/45 bg-warning/10 text-foreground [&>svg]:text-warning',
                 bad: 'border-destructive/45 bg-destructive/8 text-foreground [&>svg]:text-destructive',
