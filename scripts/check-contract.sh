@@ -31,7 +31,7 @@ success warning"
 # eighteen findings and made the real ones easier to dismiss.
 NON_COLOUR="left right center justify start end top bottom middle baseline
 wrap nowrap balance pretty ellipsis clip auto none inherit current transparent
-white black
+white black no-repeat repeat collapse separate hidden visible solid dashed dotted
 b t l r x y s e sm base lg xl 2xl 3xl 4xl 5xl 6xl 7xl 8xl 9xl xs"
 
 # ---- the gap that used to live here is CLOSED (2026-09-23) -------------------
@@ -55,7 +55,12 @@ report() { echo "  $1"; bad=$((bad + 1)); }
 
 # Comments are stripped: a comment naming a class we moved AWAY from is exactly
 # the documentation we want people to keep writing.
-strip() { perl -0777 -pe 's{/\*.*?\*/}{}gs; s{//[^\n]*}{}g' "$1"; }
+# Comments go, but their NEWLINES stay: the old version deleted block comments
+# whole, so every reported line number after one was wrong and you could not
+# jump to the finding. Arbitrary values go too, because a CSS property inside
+# `transition-[background-color,border-color,box-shadow]` is not a class and was
+# being reported as an off-contract `border-color`.
+strip() { perl -0777 -pe 's{/\*.*?\*/}{"\n" x ($& =~ tr/\n//)}gse; s{//[^\n]*}{}g; s{\[[^\]]*\]}{}g' "$1"; }
 SRC=$(find ui -name '*.tsx' -o -name '*.ts' | sort)
 
 # ---- 1. colour utilities outside the contract ----
@@ -63,6 +68,12 @@ for f in $SRC; do
   while IFS= read -r hit; do
     [ -z "$hit" ] && continue
     line="${hit%%:*}"; cls="${hit#*:}"; name="${cls#*-}"
+    # Tailwind puts a side or axis between the utility and its value:
+    # border-l-transparent, border-b-0. Strip one so we test the VALUE, not
+    # "l-transparent", which matches nothing and reads as a finding.
+    case "$name" in b-*|t-*|l-*|r-*|x-*|y-*|s-*|e-*) name="${name#*-}" ;; esac
+    # A bare number is a width, an offset or a scale step. Never a colour.
+    case "$name" in ''|*[!0-9.]*) ;; *) continue ;; esac
     grep -qw -- "$name" <<<"$CONTRACT" && continue
     grep -qw -- "$name" <<<"$NON_COLOUR" && continue
     if grep -qw -- "$name" <<<"$KNOWN_GAP"; then
