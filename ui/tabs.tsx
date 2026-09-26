@@ -19,7 +19,7 @@ export function Tabs({ className, ...props }: React.ComponentProps<typeof TabsPr
 export function TabsList({ className, ...props }: React.ComponentProps<typeof TabsPrimitive.List>) {
     return (
         <TabsPrimitive.List data-slot="tabs-list"
-            className={cn('inline-flex w-fit items-center justify-center gap-1 rounded-lg border border-border bg-panel2 p-1', className)}
+            className={cn('inline-flex w-fit items-center justify-center gap-1 rounded-lg border border-border bg-muted p-1', className)}
             {...props} />
     );
 }

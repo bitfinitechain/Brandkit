@@ -18,7 +18,7 @@ export function NativeSelect({ className, children, ...props }: React.ComponentP
         <span data-slot="native-select" className="relative inline-flex w-full items-center">
             <select
                 className={cn(
-                    'h-9 w-full appearance-none rounded-lg border border-border bg-panel2 pl-3 pr-8 text-sm text-foreground',
+                    'h-9 w-full appearance-none rounded-lg border border-border bg-muted pl-3 pr-8 text-sm text-foreground',
                     'transition-[color,box-shadow] outline-none',
                     'focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/40',
                     'aria-invalid:border-destructive disabled:cursor-not-allowed disabled:opacity-50',

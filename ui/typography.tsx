@@ -27,7 +27,7 @@ export function Prose({ className, ...props }: React.ComponentProps<'div'>) {
                 '[&_ul]:my-3 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-3 [&_ol]:list-decimal [&_ol]:pl-5',
                 '[&_li]:my-1 [&_li]:text-muted-foreground',
                 '[&_a]:text-primary-ink [&_a]:underline [&_a]:underline-offset-4',
-                '[&_code]:rounded [&_code]:bg-panel2 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-[13px]',
+                '[&_code]:rounded [&_code]:bg-muted [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-[13px]',
                 '[&_blockquote]:my-4 [&_blockquote]:border-l-2 [&_blockquote]:border-border [&_blockquote]:pl-4 [&_blockquote]:text-muted-foreground',
                 '[&_hr]:my-6 [&_hr]:border-border',
                 '[&>*:first-child]:mt-0 [&>*:last-child]:mb-0',

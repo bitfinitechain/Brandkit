@@ -37,7 +37,7 @@ export function ButtonGroup({ className, orientation, ...props }: ButtonGroupPro
 export function ButtonGroupText({ className, ...props }: React.ComponentProps<'div'>) {
     return (
         <div data-slot="button-group-text"
-             className={cn('flex items-center gap-2 border border-border bg-panel2 px-3 text-sm text-muted-foreground', className)}
+             className={cn('flex items-center gap-2 border border-border bg-muted px-3 text-sm text-muted-foreground', className)}
              {...props} />
     );
 }

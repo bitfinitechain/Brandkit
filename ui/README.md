@@ -123,7 +123,7 @@ next app installs Brandkit.
     popover      popover-foreground primary  primary-ink  primary-foreground
     secondary    secondary-foreground muted  muted-foreground
     accent       accent-foreground  destructive  destructive-foreground
-    border       input              ring
+    border       input              ring              track
     success      warning
 
 **`primary-ink` is the accent as TEXT; `primary` is the accent as a FILL.** One
@@ -133,6 +133,12 @@ all five apps defined it. Light and dark both resolve it: web, explorer, ckstats
 and trader-ui map blue-700 / blue-500, and analytics aliases it onto its own
 `--acc-ink`, the 65% mix that keeps every tenant accent clearing AA in both
 themes. Fills, borders, rings and `primary-foreground` all stay on `primary`.
+
+**`track` is the groove a control's value sits in**: progress, slider, switch.
+shadcn has no word for it, which is why three shared components were reaching for
+`panel2`, a name only analytics defines, and rendering with no background in the
+other four apps. Added 2026-09-26 after all five defined it. Analytics derives
+its own; the rest use the same neutral as the border.
 
 The last two of the status pair are the contract's only addition to the shadcn set — shadcn has
 `destructive` but no success or warning, and every one of our apps needed them.

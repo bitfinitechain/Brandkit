@@ -21,6 +21,7 @@ cd "$(dirname "$0")/.."
 
 CONTRACT="background foreground card card-foreground popover popover-foreground
 primary primary-ink primary-foreground secondary secondary-foreground muted muted-foreground
+track
 accent accent-foreground destructive destructive-foreground border input ring
 success warning"
 

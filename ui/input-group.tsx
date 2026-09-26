@@ -14,7 +14,7 @@ export function InputGroup({ className, ...props }: React.ComponentProps<'div'>)
         <div
             data-slot="input-group"
             className={cn(
-                'flex w-full items-center gap-2 rounded-lg border border-border bg-panel2 px-3',
+                'flex w-full items-center gap-2 rounded-lg border border-border bg-muted px-3',
                 'transition-[color,box-shadow] has-[input:focus-visible]:border-ring has-[input:focus-visible]:ring-[3px] has-[input:focus-visible]:ring-ring/40',
                 'has-[input[aria-invalid=true]]:border-destructive',
                 // The input inside surrenders its own chrome to the group.

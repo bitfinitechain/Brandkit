@@ -11,7 +11,7 @@ export function Textarea({ className, ...props }: React.ComponentProps<'textarea
         <textarea
             data-slot="textarea"
             className={cn(
-                'flex min-h-16 w-full rounded-lg border border-border bg-panel2 px-3 py-2 text-sm text-foreground',
+                'flex min-h-16 w-full rounded-lg border border-border bg-muted px-3 py-2 text-sm text-foreground',
                 'placeholder:text-muted-foreground field-sizing-content',
                 'transition-[color,box-shadow] outline-none',
                 'focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/40',
